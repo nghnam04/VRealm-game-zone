@@ -107,9 +107,6 @@ INSERT INTO bookings (id, user_id, game_id, room_id, start_time, end_time, statu
 (9, 15, 7, 7, DATE(NOW() - INTERVAL 6 DAY) + INTERVAL 10 HOUR, DATE(NOW() - INTERVAL 6 DAY) + INTERVAL 11 HOUR + INTERVAL 5 MINUTE, 'PENDING', 5, 758.00, 'UNPAID'),
 (10, 16, 8, 8, DATE(NOW() - INTERVAL 7 DAY) + INTERVAL 12 HOUR, DATE(NOW() - INTERVAL 7 DAY) + INTERVAL 13 HOUR, 'ACCEPTED', 3, 360.00, 'PAID');
 
-
-
-
 -- Insert Feedbacks
 INSERT INTO feedbacks (id, user_id, booking_id, rating, comment, feedback_date) VALUES
 (1, 3, 1, 2, 'Too short and not realistic', NOW() - INTERVAL 2 DAY),
@@ -122,4 +119,155 @@ INSERT INTO feedbacks (id, user_id, booking_id, rating, comment, feedback_date) 
 (8, 14, 8, 3, 'Loved every moment in the sports arena', NOW() - INTERVAL 4 DAY),
 (9, 15, 9, 4, 'Nice adventure, headset was smooth', NOW() - INTERVAL 6 DAY),
 (10, 16, 10, 4, 'Excellent quality and thrilling session!', NOW() - INTERVAL 7 DAY);
+
+-- Mock status logs trong 30 ngày
+INSERT INTO status_logs (component, status, timestamp, message) VALUES
+('server', 'UP', DATE(NOW() - INTERVAL 1 DAY) + INTERVAL 4 HOUR, 'Server initialized after successful deployment'),
+('database', 'OK', DATE(NOW() - INTERVAL 1 DAY) + INTERVAL 9 HOUR, 'Database connection pool check successful'),
+('redis', 'ERROR', DATE(NOW() - INTERVAL 1 DAY) + INTERVAL 14 HOUR, 'Redis cache high memory usage alert'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 1 DAY) + INTERVAL 21 HOUR, 'Graceful shutdown initiated by admin'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 2 DAY) + INTERVAL 7 HOUR, 'Daily database backup completed'),
+('redis', 'OK', DATE(NOW() - INTERVAL 2 DAY) + INTERVAL 13 HOUR, 'Redis replication status healthy'),
+('server', 'UP', DATE(NOW() - INTERVAL 2 DAY) + INTERVAL 19 HOUR, 'Application server re-deployed and running'),
+
+('server', 'DOWN', DATE(NOW() - INTERVAL 3 DAY) + INTERVAL 1 HOUR, 'Unexpected process crash on main server'),
+('database', 'ERROR', DATE(NOW() - INTERVAL 3 DAY) + INTERVAL 5 HOUR, 'Failed to acquire database connection'),
+('database', 'OK', DATE(NOW() - INTERVAL 3 DAY) + INTERVAL 10 HOUR, 'Database connection issue resolved'),
+('redis', 'OK', DATE(NOW() - INTERVAL 3 DAY) + INTERVAL 15 HOUR, 'Redis health check passed'),
+('server', 'UP', DATE(NOW() - INTERVAL 3 DAY) + INTERVAL 22 HOUR, 'Server stable after critical fix'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 4 DAY) + INTERVAL 2 HOUR, 'DB read/write speed normal'),
+('redis', 'ERROR', DATE(NOW() - INTERVAL 4 DAY) + INTERVAL 8 HOUR, 'Redis instance failure, attempting failover'),
+('redis', 'OK', DATE(NOW() - INTERVAL 4 DAY) + INTERVAL 13 HOUR, 'Redis failover complete, new primary online'),
+('server', 'UP', DATE(NOW() - INTERVAL 4 DAY) + INTERVAL 18 HOUR, 'Server processing routine traffic'),
+
+('database', 'ERROR', DATE(NOW() - INTERVAL 5 DAY) + INTERVAL 6 HOUR, 'Too many concurrent connections to DB'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 5 DAY) + INTERVAL 11 HOUR, 'Server automatically scaled down'),
+('redis', 'OK', DATE(NOW() - INTERVAL 5 DAY) + INTERVAL 15 HOUR, 'Redis operating normally'),
+('database', 'OK', DATE(NOW() - INTERVAL 5 DAY) + INTERVAL 20 HOUR, 'DB connection limit restored'),
+
+('server', 'UP', DATE(NOW() - INTERVAL 6 DAY) + INTERVAL 0 HOUR, 'New server instance spun up'),
+('database', 'OK', DATE(NOW() - INTERVAL 6 DAY) + INTERVAL 5 HOUR, 'Database health check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 6 DAY) + INTERVAL 14 HOUR, 'Redis cache hit ratio stable'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 6 DAY) + INTERVAL 23 HOUR, 'Server started scheduled maintenance'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 7 DAY) + INTERVAL 3 HOUR, 'Maintenance finished: Database ready'),
+('redis', 'ERROR', DATE(NOW() - INTERVAL 7 DAY) + INTERVAL 10 HOUR, 'Redis network latency spike'),
+('redis', 'OK', DATE(NOW() - INTERVAL 7 DAY) + INTERVAL 12 HOUR, 'Redis latency normalized'),
+('server', 'UP', DATE(NOW() - INTERVAL 7 DAY) + INTERVAL 18 HOUR, 'Maintenance finished: Server live'),
+
+('database', 'ERROR', DATE(NOW() - INTERVAL 8 DAY) + INTERVAL 1 HOUR, 'Critical error: DB storage full'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 8 DAY) + INTERVAL 7 HOUR, 'Server shut down due to DB dependency'),
+('database', 'OK', DATE(NOW() - INTERVAL 8 DAY) + INTERVAL 15 HOUR, 'DB storage expanded, service restored'),
+('redis', 'OK', DATE(NOW() - INTERVAL 8 DAY) + INTERVAL 21 HOUR, 'Redis OK'),
+('server', 'UP', DATE(NOW() - INTERVAL 8 DAY) + INTERVAL 23 HOUR, 'Server restarted after DB fix'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 9 DAY) + INTERVAL 2 HOUR, 'DB check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 9 DAY) + INTERVAL 8 HOUR, 'Redis OK'),
+('server', 'UP', DATE(NOW() - INTERVAL 9 DAY) + INTERVAL 15 HOUR, 'Server processing requests'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 10 DAY) + INTERVAL 4 HOUR, 'DB check OK'),
+('redis', 'ERROR', DATE(NOW() - INTERVAL 10 DAY) + INTERVAL 11 HOUR, 'Redis connection failure'),
+('redis', 'OK', DATE(NOW() - INTERVAL 10 DAY) + INTERVAL 16 HOUR, 'Redis connection restored'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 10 DAY) + INTERVAL 20 HOUR, 'Unexpected server termination'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 11 DAY) + INTERVAL 6 HOUR, 'DB check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 11 DAY) + INTERVAL 13 HOUR, 'Redis OK'),
+('server', 'UP', DATE(NOW() - INTERVAL 11 DAY) + INTERVAL 18 HOUR, 'Server started manually'),
+
+('server', 'UP', DATE(NOW() - INTERVAL 12 DAY) + INTERVAL 1 HOUR, 'Server fully operational'),
+('database', 'ERROR', DATE(NOW() - INTERVAL 12 DAY) + INTERVAL 9 HOUR, 'DB indexing task failed'),
+('database', 'OK', DATE(NOW() - INTERVAL 12 DAY) + INTERVAL 15 HOUR, 'DB indexing successfully recovered'),
+('redis', 'OK', DATE(NOW() - INTERVAL 12 DAY) + INTERVAL 22 HOUR, 'Redis OK'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 13 DAY) + INTERVAL 2 HOUR, 'DB check OK'),
+('redis', 'ERROR', DATE(NOW() - INTERVAL 13 DAY) + INTERVAL 8 HOUR, 'Redis authentication failure'),
+('redis', 'OK', DATE(NOW() - INTERVAL 13 DAY) + INTERVAL 14 HOUR, 'Redis auth fixed'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 13 DAY) + INTERVAL 20 HOUR, 'Server memory leak detected'),
+
+('server', 'UP', DATE(NOW() - INTERVAL 14 DAY) + INTERVAL 4 HOUR, 'Server restarted after memory optimization'),
+('database', 'OK', DATE(NOW() - INTERVAL 14 DAY) + INTERVAL 11 HOUR, 'DB check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 14 DAY) + INTERVAL 17 HOUR, 'Redis OK'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 15 DAY) + INTERVAL 6 HOUR, 'DB check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 15 DAY) + INTERVAL 13 HOUR, 'Redis OK'),
+('server', 'UP', DATE(NOW() - INTERVAL 15 DAY) + INTERVAL 20 HOUR, 'Server processing requests'),
+
+('server', 'DOWN', DATE(NOW() - INTERVAL 16 DAY) + INTERVAL 1 HOUR, 'Network partition detected on server'),
+('database', 'ERROR', DATE(NOW() - INTERVAL 16 DAY) + INTERVAL 8 HOUR, 'DB connection lost due to network'),
+('redis', 'ERROR', DATE(NOW() - INTERVAL 16 DAY) + INTERVAL 11 HOUR, 'Redis disconnected'),
+('server', 'UP', DATE(NOW() - INTERVAL 16 DAY) + INTERVAL 17 HOUR, 'Network restored, Server back online'),
+('database', 'OK', DATE(NOW() - INTERVAL 16 DAY) + INTERVAL 22 HOUR, 'DB connection restored'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 17 DAY) + INTERVAL 3 HOUR, 'DB check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 17 DAY) + INTERVAL 10 HOUR, 'Redis OK'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 17 DAY) + INTERVAL 16 HOUR, 'Server load balancer failure'),
+
+('server', 'UP', DATE(NOW() - INTERVAL 18 DAY) + INTERVAL 0 HOUR, 'Load balancer fixed, Server accessible'),
+('database', 'OK', DATE(NOW() - INTERVAL 18 DAY) + INTERVAL 8 HOUR, 'DB check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 18 DAY) + INTERVAL 15 HOUR, 'Redis OK'),
+('database', 'ERROR', DATE(NOW() - INTERVAL 18 DAY) + INTERVAL 22 HOUR, 'DB replication lag alert'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 19 DAY) + INTERVAL 4 HOUR, 'DB replication lag cleared'),
+('redis', 'ERROR', DATE(NOW() - INTERVAL 19 DAY) + INTERVAL 10 HOUR, 'Redis cache flush failure'),
+('redis', 'OK', DATE(NOW() - INTERVAL 19 DAY) + INTERVAL 14 HOUR, 'Redis cache manually cleared'),
+('server', 'UP', DATE(NOW() - INTERVAL 19 DAY) + INTERVAL 20 HOUR, 'Server processing requests'),
+
+('database', 'ERROR', DATE(NOW() - INTERVAL 20 DAY) + INTERVAL 1 HOUR, 'DB query timeout detected'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 20 DAY) + INTERVAL 7 HOUR, 'Server instance terminated by mistake'),
+('server', 'UP', DATE(NOW() - INTERVAL 20 DAY) + INTERVAL 13 HOUR, 'New server instance launched'),
+('redis', 'OK', DATE(NOW() - INTERVAL 20 DAY) + INTERVAL 19 HOUR, 'Redis OK'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 21 DAY) + INTERVAL 2 HOUR, 'DB check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 21 DAY) + INTERVAL 11 HOUR, 'Redis OK'),
+('server', 'UP', DATE(NOW() - INTERVAL 21 DAY) + INTERVAL 20 HOUR, 'Server running smoothly'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 22 DAY) + INTERVAL 6 HOUR, 'DB check OK'),
+('redis', 'ERROR', DATE(NOW() - INTERVAL 22 DAY) + INTERVAL 12 HOUR, 'Redis out of sync error'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 22 DAY) + INTERVAL 17 HOUR, 'Scheduled server restart for patch'),
+('redis', 'OK', DATE(NOW() - INTERVAL 22 DAY) + INTERVAL 23 HOUR, 'Redis sync repaired'),
+
+('server', 'UP', DATE(NOW() - INTERVAL 23 DAY) + INTERVAL 3 HOUR, 'Server patch applied, UP'),
+('database', 'ERROR', DATE(NOW() - INTERVAL 23 DAY) + INTERVAL 10 HOUR, 'DB slow query detected'),
+('database', 'OK', DATE(NOW() - INTERVAL 23 DAY) + INTERVAL 15 HOUR, 'DB query optimized, performance OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 23 DAY) + INTERVAL 21 HOUR, 'Redis OK'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 24 DAY) + INTERVAL 1 HOUR, 'DB check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 24 DAY) + INTERVAL 9 HOUR, 'Redis OK'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 24 DAY) + INTERVAL 16 HOUR, 'Server maintenance mode activated'),
+('server', 'UP', DATE(NOW() - INTERVAL 24 DAY) + INTERVAL 23 HOUR, 'Server maintenance completed'),
+
+('database', 'ERROR', DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 4 HOUR, 'DB transaction rollback failure'),
+('redis', 'OK', DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 12 HOUR, 'Redis OK'),
+('database', 'OK', DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 18 HOUR, 'DB issue resolved'),
+('server', 'UP', DATE(NOW() - INTERVAL 25 DAY) + INTERVAL 22 HOUR, 'Server OK'),
+
+('server', 'DOWN', DATE(NOW() - INTERVAL 26 DAY) + INTERVAL 2 HOUR, 'Server auto-scaling failure'),
+('database', 'OK', DATE(NOW() - INTERVAL 26 DAY) + INTERVAL 9 HOUR, 'DB check OK'),
+('redis', 'ERROR', DATE(NOW() - INTERVAL 26 DAY) + INTERVAL 15 HOUR, 'Redis configuration mismatch'),
+('redis', 'OK', DATE(NOW() - INTERVAL 26 DAY) + INTERVAL 20 HOUR, 'Redis config updated'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 27 DAY) + INTERVAL 5 HOUR, 'DB check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 27 DAY) + INTERVAL 13 HOUR, 'Redis OK'),
+('server', 'UP', DATE(NOW() - INTERVAL 27 DAY) + INTERVAL 19 HOUR, 'Server scaled up'),
+
+('server', 'UP', DATE(NOW() - INTERVAL 28 DAY) + INTERVAL 1 HOUR, 'Server fully operational'),
+('database', 'ERROR', DATE(NOW() - INTERVAL 28 DAY) + INTERVAL 7 HOUR, 'DB deadlocks detected'),
+('redis', 'ERROR', DATE(NOW() - INTERVAL 28 DAY) + INTERVAL 14 HOUR, 'Redis connection failure'),
+('database', 'OK', DATE(NOW() - INTERVAL 28 DAY) + INTERVAL 21 HOUR, 'DB deadlocks resolved'),
+
+('database', 'OK', DATE(NOW() - INTERVAL 29 DAY) + INTERVAL 4 HOUR, 'DB check OK'),
+('redis', 'OK', DATE(NOW() - INTERVAL 29 DAY) + INTERVAL 11 HOUR, 'Redis OK'),
+('server', 'DOWN', DATE(NOW() - INTERVAL 29 DAY) + INTERVAL 16 HOUR, 'Server shutdown for security patch'),
+('server', 'UP', DATE(NOW() - INTERVAL 29 DAY) + INTERVAL 23 HOUR, 'Server security patch applied'),
+
+('database', 'ERROR', DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 2 HOUR, 'DB file system error'),
+('redis', 'OK', DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 10 HOUR, 'Redis OK'),
+('server', 'UP', DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 15 HOUR, 'Server OK'),
+('database', 'OK', DATE(NOW() - INTERVAL 30 DAY) + INTERVAL 20 HOUR, 'DB file system fixed');
+
+
+
+
 

@@ -9,6 +9,7 @@ import BookingManagement from "./BookingManagement";
 import DeviceManagement from "./DeviceManagement";
 import DashboardNavLink from "../../components/admin/DashboardNavLink";
 import AdminHome from "../../components/admin/AdminHome";
+import InfrastructureManagement from "./InfrastructureManagement";
 
 const DashBoard = () => {
   return (
@@ -25,6 +26,7 @@ const DashBoard = () => {
           </h2>
           <DashboardNavLink to="/dashboard">Tổng quan</DashboardNavLink>
           <hr className="border-t border-gray-700 my-2" />
+          <DashboardNavLink to="infrastructure">Quản lý Cơ sở Hạ tầng</DashboardNavLink>
           <DashboardNavLink to="users">Quản lý Người dùng</DashboardNavLink>
           <DashboardNavLink to="games">Quản lý Game</DashboardNavLink>
           <DashboardNavLink to="rooms">Quản lý Phòng</DashboardNavLink>
@@ -39,6 +41,7 @@ const DashBoard = () => {
         <div className="card-base min-h-[60vh] p-8">
           <Routes>
             <Route index element={<AdminHome />} />
+            <Route path="infrastructure" element={<InfrastructureManagement />} />
             <Route path="users" element={<UserManagement />} />
             <Route path="games" element={<GameManagement />} />
             <Route path="rooms" element={<RoomManagement />} />

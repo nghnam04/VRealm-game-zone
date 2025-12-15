@@ -21,7 +21,7 @@ const Footer = () => {
 
       <p className="text-gray-500 text-center">
         &copy; {new Date().getFullYear()} Designed & Developed by
-        <span className="text-vr-blue-2 font-medium"> Nguyen Hoang Nam</span>.
+        <span className="text-vr-blue-2 font-medium"> Nguyen Hoang Nam</span>
       </p>
     </footer>
   );

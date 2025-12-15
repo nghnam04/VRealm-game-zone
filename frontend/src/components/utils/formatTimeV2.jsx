@@ -1,5 +1,5 @@
 const formatTimeV2 = (date) => {
-  return date.toLocaleTimeString("vi-VN", {
+  return new Date(date + "Z").toLocaleTimeString("vi-VN", {
     hour: "2-digit",
     minute: "2-digit",
   });

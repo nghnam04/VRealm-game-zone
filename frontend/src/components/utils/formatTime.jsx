@@ -1,3 +1,3 @@
-const formatTime = (dateString) => new Date(dateString).toLocaleString("vi-VN");
+const formatTime = (date) => new Date(date + "Z").toLocaleString("vi-VN");
 
 export default formatTime;
