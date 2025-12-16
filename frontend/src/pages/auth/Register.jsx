@@ -18,17 +18,25 @@ const Register = () => {
     e.preventDefault(); // Ngăn browser reload
     setError("");
     setSuccess("");
-    try {
-      await register(name, email, username, password);
+
+    const result = await register(name, email, username, password);
+
+    if (result?.success) {
       setSuccess("Đăng ký thành công! Bạn có thể đăng nhập ngay bây giờ.");
       setTimeout(() => {
         navigate("/login");
       }, 2000);
-    } catch (err) {
-      setError(
-        err.response?.data?.message || "Đăng ký thất bại. Vui lòng thử lại."
-      );
-      console.error(err);
+    } else {
+      if (result?.status === 403) {
+        setError("Tên đăng nhập hoặc email đã tồn tại");
+      } else if (result?.status === 429) {
+        setError("Đăng ký sai quá nhiều lần. Vui lòng thử lại sau 1 phút");
+      } else if (result?.status === 400) {
+        setError("Dữ liệu không hợp lệ.");
+      } else {
+        setError(result?.error || "Đăng ký thất bại. Vui lòng thử lại");
+      }
+      console.error("Register error:", result);
     }
   };
 
@@ -43,6 +51,7 @@ const Register = () => {
         <h2 className="text-4xl font-display text-center text-vr-blue mb-8">
           Đăng Ký
         </h2>
+
         {error && (
           <div className="bg-red-500/20 text-red-400 p-3 rounded-lg mb-4 text-center">
             {error}
@@ -53,6 +62,7 @@ const Register = () => {
             {success}
           </div>
         )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -119,6 +129,7 @@ const Register = () => {
             </button>
           </div>
         </form>
+
         <p className="text-center text-gray-400 mt-6">
           Đã có tài khoản?{" "}
           <Link to="/login" className="font-medium text-white hover:underline">

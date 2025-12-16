@@ -17,6 +17,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import vn.edu.hust.vrgamesapp.security.JwtApplicationFilter;
+import vn.edu.hust.vrgamesapp.security.RateLimitFilter;
 
 import java.util.Arrays;
 
@@ -26,6 +27,7 @@ import java.util.Arrays;
 public class SecurityConfig {
 
     private final JwtApplicationFilter jwtApplicationFilter;
+    private final RateLimitFilter rateLimitFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -46,6 +48,7 @@ public class SecurityConfig {
                             // Authenticate
                             .anyRequest().authenticated()
                     )
+                    .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
                     .addFilterBefore(jwtApplicationFilter, UsernamePasswordAuthenticationFilter.class);
 
             return http.build();

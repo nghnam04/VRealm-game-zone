@@ -92,9 +92,8 @@ const FeedbackManagement = () => {
                 </td>
                 <td className="px-6 py-4 text-sm text-yellow-400 flex items-center mt-3">
                   {f.rating}⭐
-
                 </td>
-                <td className="px-6 py-4 text-sm text-gray-300 max-w-xs truncate">
+                <td className="px-6 py-4 text-sm text-gray-300 max-w-xs break-words whitespace-normal">
                   {f.comment}
                 </td>
                 <td className="px-6 py-4 text-sm text-gray-500">

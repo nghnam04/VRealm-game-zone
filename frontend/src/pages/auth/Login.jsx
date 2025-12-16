@@ -14,18 +14,28 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    try {
-      const user = await login(username, password);
-      if (user?.role?.name === "ADMIN") {
+
+    const result = await login(username, password);
+
+    if (result?.user) {
+      const role = result.user.role.name;
+      if (role === "ADMIN") {
         navigate("/dashboard");
-      } else if (user?.role?.name === "STAFF") {
+      } else if (role === "STAFF") {
         navigate("/payment");
       } else {
         navigate("/");
       }
-    } catch (err) {
-      setError("Tên đăng nhập hoặc mật khẩu không đúng.");
-      console.error(err);
+    } else {
+      if (result?.status === 429) {
+        setError("Đăng nhập sai quá nhiều lần. Vui lòng thử lại sau 1 phút");
+      } else if (result?.status === 401 || result?.status === 403) {
+        setError("Tên đăng nhập hoặc mật khẩu không đúng");
+      } else {
+        setError(result?.error || "Có lỗi xảy ra. Vui lòng thử lại");
+      }
+
+      console.error("Login error:", result);
     }
   };
 
@@ -40,11 +50,13 @@ const Login = () => {
         <h2 className="text-4xl font-display text-center text-vr-blue mb-8">
           Đăng Nhập
         </h2>
+
         {error && (
           <div className="bg-red-500/20 text-red-400 p-3 rounded-lg mb-4 text-center">
             {error}
           </div>
         )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -87,6 +99,7 @@ const Login = () => {
             </button>
           </div>
         </form>
+        
         <p className="text-center text-gray-400 mt-6">
           Chưa có tài khoản?{" "}
           <Link

@@ -74,13 +74,15 @@ const AuthProvider = ({ children }) => {
       const accessToken = responseData?.accessToken;
 
       if (!accessToken) {
-        throw new Error("Đăng nhập không hợp lệ hoặc thiếu token.");
+        setLoading(false);
+        return { error: "Đăng nhập không hợp lệ hoặc thiếu token." };
       }
 
       const userObject = decodeTokenToUser(accessToken);
 
       if (!userObject) {
-        throw new Error("Thông tin xác thực không thể giải mã.");
+        setLoading(false);
+        return { error: "Thông tin xác thực không thể giải mã." };
       }
 
       sessionStorage.setItem("token", accessToken);
@@ -88,7 +90,7 @@ const AuthProvider = ({ children }) => {
       setUser(userObject);
       setLoading(false);
 
-      return userObject;
+      return { user: userObject }; 
     } catch (error) {
       console.error("Lỗi đăng nhập:", error.response?.data || error.message);
 
@@ -97,9 +99,11 @@ const AuthProvider = ({ children }) => {
       setUser(null);
       setLoading(false);
 
-      const errorMessage =
-        error.response?.data?.message || "Sai tên đăng nhập hoặc mật khẩu.";
-      throw new Error(errorMessage);
+      return {
+        error:
+          error.response?.data?.message || "Sai tên đăng nhập hoặc mật khẩu.",
+        status: error.response?.status,
+      };
     }
   };
 
@@ -113,11 +117,22 @@ const AuthProvider = ({ children }) => {
   const register = async (name, email, username, password) => {
     setLoading(true);
     try {
-      await authService.register(name, email, username, password);
+      const response = await authService.register(
+        name,
+        email,
+        username,
+        password
+      );
       setLoading(false);
+      return { success: true, data: response };
     } catch (error) {
       setLoading(false);
-      throw error;
+      return {
+        error:
+          error.response?.data?.message ||
+          "Đăng ký thất bại. Vui lòng thử lại.",
+        status: error.response?.status,
+      };
     }
   };
 

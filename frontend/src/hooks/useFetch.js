@@ -15,7 +15,7 @@ const useFetch = (asyncFunction, dependencies = [], lazy = false) => {
         return { data: result.data };
       } catch (err) {
         setError(err.response ? err.response.data.message : err.message);
-        return { error: err };
+        throw err;
       } finally {
         setLoading(false);
       }

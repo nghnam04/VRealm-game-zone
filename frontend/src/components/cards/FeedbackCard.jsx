@@ -1,3 +1,4 @@
+import formatTime from "../utils/formatTime";
 import getRatingStars from "../utils/getRatingStars";
 
 const FeedbackCard = ({ feedback }) => (
@@ -7,7 +8,7 @@ const FeedbackCard = ({ feedback }) => (
         {getRatingStars(feedback.rating)}
       </span>
       <span className="text-sm text-gray-500">
-        {new Date(feedback.feedbackDate).toLocaleString("vi-VN")}
+        {formatTime(feedback.feedbackDate)}
       </span>
     </div>
     <p className="text-gray-300 italic mb-3">"{feedback.comment}"</p>
