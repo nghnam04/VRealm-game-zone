@@ -1,7 +1,7 @@
 import axiosInstance from "../api/axios";
 
 const feedBackService = {
-  getAllFeedbacks: () => axiosInstance.get("/feedbacks"),
+  getAllFeedbacks: (params = {}) => axiosInstance.get("/feedbacks", { params }),
 
   getFeedbackById: (id) => axiosInstance.get(`/feedbacks/${id}`),
 

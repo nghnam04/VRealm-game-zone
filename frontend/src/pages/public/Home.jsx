@@ -26,7 +26,7 @@ const Home = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setBgIndex((prev) => (prev + 1) % bgImages.length);
-    }, 5000);
+    }, 4000);
 
     return () => clearInterval(interval);
   }, []);
@@ -34,18 +34,28 @@ const Home = () => {
   useEffect(() => {
     const fetchGamesAndReviews = async () => {
       try {
-        const gameResponse = await gameService.getAllGames();
-        const games = Array.isArray(gameResponse.data) ? gameResponse.data : [];
-        const shuffledGames = games.sort(() => 0.5 - Math.random());
-        setFeaturedGames(shuffledGames.slice(0, 6));
+        const gameResponse = await gameService.getAllGames({
+          pageNo: 0,
+          pageSize: 30,
+        });
+        const games = Array.isArray(gameResponse.data.content)
+          ? gameResponse.data.content
+          : [];
+        const shuffledGames = games.sort(() => 0.5 - Math.random()).slice(0, 9);
+        setFeaturedGames(shuffledGames);
 
-        const feedbackResponse = await feedbackService.getAllFeedbacks();
-        const allFeedbacks = Array.isArray(feedbackResponse.data)
-          ? feedbackResponse.data
+        const feedbackResponse = await feedbackService.getAllFeedbacks({
+          pageNo: 0,
+          pageSize: 30,
+        });
+        const allFeedbacks = Array.isArray(feedbackResponse.data.content)
+          ? feedbackResponse.data.content
           : [];
 
-        const shuffledFeedbacks = allFeedbacks.sort(() => 0.5 - Math.random());
-        setReviews(shuffledFeedbacks.slice(0, 4));
+        const shuffledFeedbacks = allFeedbacks
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 8);
+        setReviews(shuffledFeedbacks);
       } catch (error) {
         console.error("Failed to fetch data:", error);
         setFeaturedGames([]);

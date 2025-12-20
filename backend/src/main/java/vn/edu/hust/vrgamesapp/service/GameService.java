@@ -1,9 +1,13 @@
 package vn.edu.hust.vrgamesapp.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.edu.hust.vrgamesapp.dto.GameDto;
+import vn.edu.hust.vrgamesapp.dto.PageResponse;
 import vn.edu.hust.vrgamesapp.entity.Game;
 import vn.edu.hust.vrgamesapp.constant.GameGenre;
 import vn.edu.hust.vrgamesapp.entity.Room;
@@ -11,6 +15,7 @@ import vn.edu.hust.vrgamesapp.mapper.GameMapper;
 import vn.edu.hust.vrgamesapp.repository.BookingRepository;
 import vn.edu.hust.vrgamesapp.repository.GameRepository;
 import vn.edu.hust.vrgamesapp.repository.RoomRepository;
+import vn.edu.hust.vrgamesapp.utils.PaginationUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,20 +64,53 @@ public class GameService {
         return GameMapper.mapToGameDto(game);
     }
 
-    public List<GameDto> getAllGames(String genre) {
+    public PageResponse<GameDto> getAllGames(
+            int pageNo, int pageSize, String sortBy, String sortDir,
+            String genre, String name,
+            Integer minDuration, Integer maxDuration,
+            Double minPrice, Double maxPrice,
+            Integer minPlayers, Integer maxPlayers) {
+
+        Pageable pageable = PaginationUtils.buildPageable(pageNo, pageSize, sortBy, sortDir);
+
+        Specification<Game> spec = Specification.where(null);
+
         if (genre != null && !genre.isEmpty()) {
             try {
-                GameGenre gameGenre = GameGenre.valueOf(genre.toUpperCase());
-                return gameRepository.findByGenre(gameGenre).stream()
-                        .map(game -> GameMapper.mapToGameDto(game))
-                        .collect(Collectors.toList());
+                GameGenre g = GameGenre.valueOf(genre.toUpperCase());
+                spec = spec.and((root, query, cb) -> cb.equal(root.get("genre"), g));
             } catch (IllegalArgumentException e) {
                 throw new RuntimeException("Invalid genre: " + genre);
             }
         }
-        return gameRepository.findAll().stream()
-                .map(game -> GameMapper.mapToGameDto(game))
+
+        if (name != null && !name.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
+        }
+
+        if (minDuration != null) spec = spec.and((root, query, cb) -> cb.ge(root.get("duration"), minDuration));
+        if (maxDuration != null) spec = spec.and((root, query, cb) -> cb.le(root.get("duration"), maxDuration));
+
+        if (minPrice != null) spec = spec.and((root, query, cb) -> cb.ge(root.get("price"), minPrice));
+        if (maxPrice != null) spec = spec.and((root, query, cb) -> cb.le(root.get("price"), maxPrice));
+
+        if (minPlayers != null) spec = spec.and((root, query, cb) -> cb.ge(root.get("maxPlayers"), minPlayers));
+        if (maxPlayers != null) spec = spec.and((root, query, cb) -> cb.le(root.get("maxPlayers"), maxPlayers));
+
+        Page<Game> page = gameRepository.findAll(spec, pageable);
+
+        List<GameDto> content = page.getContent().stream()
+                .map(GameMapper::mapToGameDto)
                 .collect(Collectors.toList());
+
+        return new PageResponse<>(
+                content,
+                page.getNumber(),
+                page.getSize(),
+                (int) page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
     }
 
     @Transactional

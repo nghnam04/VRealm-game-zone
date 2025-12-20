@@ -34,5 +34,6 @@ public class Device {
 
     private int quantity;
 
+    @Column(columnDefinition = "TEXT")
     private String imageUrl;
 }

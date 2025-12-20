@@ -21,6 +21,9 @@ const ReviewCard = ({ feedback }) => (
         </span>
       </p>
     </div>
+    <p className="text-sm text-white font-semibold mb-3">
+      {feedback.gameName}
+    </p>
     <p className="text-gray-200 italic">"{feedback.comment}"</p>
   </motion.div>
 );

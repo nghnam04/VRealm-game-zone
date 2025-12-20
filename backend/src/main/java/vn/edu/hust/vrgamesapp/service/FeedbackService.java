@@ -2,9 +2,13 @@ package vn.edu.hust.vrgamesapp.service;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import vn.edu.hust.vrgamesapp.constant.PaymentStatus;
 import vn.edu.hust.vrgamesapp.dto.FeedbackDto;
+import vn.edu.hust.vrgamesapp.dto.PageResponse;
 import vn.edu.hust.vrgamesapp.entity.Booking;
 import vn.edu.hust.vrgamesapp.entity.Feedback;
 import vn.edu.hust.vrgamesapp.constant.BookingStatus;
@@ -13,7 +17,9 @@ import vn.edu.hust.vrgamesapp.mapper.FeedbackMapper;
 import vn.edu.hust.vrgamesapp.repository.BookingRepository;
 import vn.edu.hust.vrgamesapp.repository.FeedbackRepository;
 import vn.edu.hust.vrgamesapp.repository.UserRepository;
+import vn.edu.hust.vrgamesapp.utils.PaginationUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,10 +69,67 @@ public class FeedbackService {
         return FeedbackMapper.mapToFeedbackDto(feedback);
     }
 
-    public List<FeedbackDto> getAllFeedbacks() {
-        return feedbackRepository.findAll().stream()
-                .map(feedback -> FeedbackMapper.mapToFeedbackDto(feedback))
+    public PageResponse<FeedbackDto> getAllFeedbacks(
+            int pageNo, int pageSize, String sortBy, String sortDir,
+            String gameName, String roomName,
+            Integer minRating, Integer maxRating,
+            LocalDate fromDate, LocalDate toDate
+    ) {
+
+        Pageable pageable = PaginationUtils.buildPageable(pageNo, pageSize, sortBy, sortDir);
+
+        Specification<Feedback> spec = Specification.where(null);
+
+        if (gameName != null && !gameName.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.join("booking")
+                    .join("game")
+                    .get("name")), "%" + gameName.toLowerCase() + "%"));
+        }
+
+        if (roomName != null && !roomName.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.join("booking")
+                    .join("room")
+                    .get("name")), "%" + roomName.toLowerCase() + "%"));
+        }
+
+        if (minRating != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.ge(root.get("rating"), minRating)
+            );
+        }
+
+        if (maxRating != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.le(root.get("rating"), maxRating)
+            );
+        }
+
+        if (fromDate != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.greaterThanOrEqualTo(root.get("feedbackDate"), fromDate.atStartOfDay())
+            );
+        }
+
+        if (toDate != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.lessThanOrEqualTo(root.get("feedbackDate"), toDate.atTime(23, 59, 59))
+            );
+        }
+
+        Page<Feedback> page = feedbackRepository.findAll(spec, pageable);
+
+        List<FeedbackDto> content = page.getContent().stream()
+                .map(FeedbackMapper::mapToFeedbackDto)
                 .collect(Collectors.toList());
+
+        return new PageResponse<>(
+                content,
+                page.getNumber(),
+                page.getSize(),
+                (int) page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
     }
 
     @Transactional

@@ -2,11 +2,15 @@ package vn.edu.hust.vrgamesapp.service;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import vn.edu.hust.vrgamesapp.constant.DeviceStatus;
 import vn.edu.hust.vrgamesapp.constant.RoomStatus;
 import vn.edu.hust.vrgamesapp.dto.BookingDto;
+import vn.edu.hust.vrgamesapp.dto.PageResponse;
 import vn.edu.hust.vrgamesapp.entity.Booking;
 import vn.edu.hust.vrgamesapp.constant.BookingStatus;
 import vn.edu.hust.vrgamesapp.constant.PaymentStatus;
@@ -19,7 +23,9 @@ import vn.edu.hust.vrgamesapp.repository.DeviceRepository;
 import vn.edu.hust.vrgamesapp.repository.GameRepository;
 import vn.edu.hust.vrgamesapp.repository.RoomRepository;
 import vn.edu.hust.vrgamesapp.repository.UserRepository;
+import vn.edu.hust.vrgamesapp.utils.PaginationUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -137,11 +143,105 @@ public class BookingService {
         return BookingMapper.mapToBookingDto(booking);
     }
 
-    public List<BookingDto> getAllBookings() {
-        return bookingRepository.findAll().stream()
-                .map(booking -> BookingMapper.mapToBookingDto(booking))
+    public PageResponse<BookingDto> getAllBookings(
+            int pageNo, int pageSize, String sortBy, String sortDir,
+
+            String userName, String gameName, String roomName,
+            String status, String paymentStatus,
+            Integer minGameDuration, Integer maxGameDuration,
+            LocalDate minStartTime, LocalDate maxStartTime,
+            Integer minPlayers, Integer maxPlayers,
+            Double minTotalAmount, Double maxTotalAmount
+    ) {
+
+        Pageable pageable = PaginationUtils.buildPageable(pageNo, pageSize, sortBy, sortDir);
+        Specification<Booking> spec = Specification.where(null);
+
+        if (userName != null && !userName.isEmpty()) {
+            spec = spec.and((root, q, cb) ->
+                    cb.like(cb.lower(root.get("user").get("username")),
+                            "%" + userName.toLowerCase() + "%"));
+        }
+
+        if (gameName != null && !gameName.isEmpty()) {
+            spec = spec.and((root, q, cb) ->
+                    cb.like(cb.lower(root.get("game").get("name")),
+                            "%" + gameName.toLowerCase() + "%"));
+        }
+
+        if (roomName != null && !roomName.isEmpty()) {
+            spec = spec.and((root, q, cb) ->
+                    cb.like(cb.lower(root.get("room").get("name")),
+                            "%" + roomName.toLowerCase() + "%"));
+        }
+
+        if (status != null && !status.isEmpty()) {
+            spec = spec.and((root, q, cb) ->
+                    cb.equal(root.get("status"), BookingStatus.valueOf(status)));
+        }
+
+        if (paymentStatus != null && !paymentStatus.isEmpty()) {
+            spec = spec.and((root, q, cb) ->
+                    cb.equal(root.get("paymentStatus"), PaymentStatus.valueOf(paymentStatus)));
+        }
+
+        if (minGameDuration != null) {
+            spec = spec.and((root, q, cb) ->
+                    cb.ge(root.get("game").get("duration"), minGameDuration));
+        }
+
+        if (maxGameDuration != null) {
+            spec = spec.and((root, q, cb) ->
+                    cb.le(root.get("game").get("duration"), maxGameDuration));
+        }
+
+        if (minStartTime != null) {
+            spec = spec.and((root, q, cb) ->
+                    cb.greaterThanOrEqualTo(root.get("startTime"), minStartTime.atStartOfDay()));
+        }
+
+        if (maxStartTime != null) {
+            spec = spec.and((root, q, cb) ->
+                    cb.lessThanOrEqualTo(root.get("startTime"), maxStartTime.atTime(23, 59, 59)));
+        }
+
+        if (minPlayers != null) {
+            spec = spec.and((root, q, cb) ->
+                    cb.ge(root.get("numberOfPlayers"), minPlayers));
+        }
+
+        if (maxPlayers != null) {
+            spec = spec.and((root, q, cb) ->
+                    cb.le(root.get("numberOfPlayers"), maxPlayers));
+        }
+
+        if (minTotalAmount != null) {
+            spec = spec.and((root, q, cb) ->
+                    cb.ge(root.get("totalAmount"), minTotalAmount));
+        }
+
+        if (maxTotalAmount != null) {
+            spec = spec.and((root, q, cb) ->
+                    cb.le(root.get("totalAmount"), maxTotalAmount));
+        }
+
+        Page<Booking> page = bookingRepository.findAll(spec, pageable);
+
+        List<BookingDto> content = page.getContent()
+                .stream()
+                .map(BookingMapper::mapToBookingDto)
                 .collect(Collectors.toList());
+
+        return new PageResponse<>(
+                content,
+                page.getNumber(),
+                page.getSize(),
+                (int) page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
     }
+
 
     public List<BookingDto> getUserBookings(String username) {
         return bookingRepository.findByUsername(username).stream()
@@ -274,7 +374,7 @@ public class BookingService {
         bookingRepository.delete(booking);
     }
 
-    @Scheduled(fixedRate = 1800000) // 30 mins
+    @Scheduled(fixedRate = 1800000, initialDelay = 1800000) // 30 mins
     public void checkPendingTimeouts() {
         LocalDateTime now = LocalDateTime.now();
         // Delete all CANCELLED bookings first

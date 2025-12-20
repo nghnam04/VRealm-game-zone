@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import vn.edu.hust.vrgamesapp.dto.PageResponse;
 import vn.edu.hust.vrgamesapp.dto.UserDto;
 import vn.edu.hust.vrgamesapp.service.UserService;
-
-import java.util.List;
+import vn.edu.hust.vrgamesapp.utils.AppConstants;
 
 @RestController
 @RequestMapping("/api/users")
@@ -30,9 +30,20 @@ public class UserController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<UserDto>> getAllUsers() {
-        return ResponseEntity.ok(userService.getAllUsers());
+    public ResponseEntity<PageResponse<UserDto>> getAllUsers(
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION) String sortDir,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String username,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String role
+    ) {
+        return ResponseEntity.ok(userService.getAllUsers(
+                pageNo, pageSize, sortBy, sortDir,
+                name, username, email, role
+        ));
     }
 
     @PutMapping("/{id}")

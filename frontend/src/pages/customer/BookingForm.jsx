@@ -10,7 +10,7 @@ import useAuth from "../../hooks/useAuth";
 import LoadingSpinner from "../../components/common/LoadingSpinner";
 
 const BookingForm = () => {
-  const { bookingId, gameId, roomId } = useParams(); // bookingId cho edit, gameId từ GameDetail, roomId từ RoomDetail
+  const { bookingId, gameId, roomId } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -26,22 +26,20 @@ const BookingForm = () => {
   const [loadingBooking, setLoadingBooking] = useState(!!bookingId);
 
   useEffect(() => {
-    if (bookingId) {
-      setLoadingBooking(true);
-      bookingService
-        .getBookingById(bookingId)
-        .then((res) => {
-          const b = res.data;
-          setSelectedGameId(b.gameId.toString());
-          setSelectedRoomId(b.roomId.toString());
-          setDate(b.startTime.split("T")[0]);
-          setSelectedSlot(b.startTime.split("T")[1].slice(0, 5));
-          setNumPlayers(b.numberOfPlayers);
-          setTotalAmount(b.totalAmount);
-        })
-        .catch((err) => console.error(err))
-        .finally(() => setLoadingBooking(false));
-    }
+    if (!bookingId) return;
+    setLoadingBooking(true);
+    bookingService
+      .getBookingById(bookingId)
+      .then((res) => {
+        const b = res.data;
+        setSelectedGameId(String(b.gameId));
+        setSelectedRoomId(String(b.roomId));
+        setDate(b.startTime.split("T")[0]);
+        setSelectedSlot(b.startTime.split("T")[1].slice(0, 5));
+        setNumPlayers(b.numberOfPlayers);
+        setTotalAmount(b.totalAmount);
+      })
+      .finally(() => setLoadingBooking(false));
   }, [bookingId]);
 
   const { data: game, loading: gameLoading } = useFetch(
@@ -54,34 +52,29 @@ const BookingForm = () => {
     [selectedRoomId]
   );
 
-  const { data: rooms, loading: roomsLoading } = useFetch(
-    roomService.getAllRooms
-  );
-  const { data: games, loading: gamesLoading } = useFetch(
-    !gameId ? gameService.getAllGames : null
+  const { data: gamesPage, loading: gamesLoading } = useFetch(
+    !gameId ? () => gameService.getAllGames({ pageNo: 0, pageSize: 50 }) : null,
+    []
   );
 
+  const { data: roomsPage, loading: roomsLoading } = useFetch(
+    () => roomService.getAllRooms({ pageNo: 0, pageSize: 50 }),
+    []
+  );
+
+  const games = gamesPage?.content || [];
+  const rooms = roomsPage?.content || [];
+
   useEffect(() => {
-    if (game) {
-      setNumPlayers((prev) => Math.min(prev, game.maxPlayers));
-      setTotalAmount(
-        (game.price * numPlayers * (game.duration / 60)).toFixed(0)
-      );
-    }
+    if (!game) return;
+    setNumPlayers((prev) => Math.min(prev, game.maxPlayers));
+    setTotalAmount(Math.round(game.price * numPlayers * (game.duration / 60)));
   }, [game, numPlayers]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !selectedSlot ||
-      !selectedGameId ||
-      !selectedRoomId ||
-      numPlayers <= 0 ||
-      !date
-    ) {
-      setError(
-        "Vui lòng chọn đầy đủ thông tin và đảm bảo số người chơi hợp lệ."
-      );
+    if (!selectedGameId || !selectedRoomId || !selectedSlot) {
+      setError("Vui lòng chọn đầy đủ thông tin.");
       return;
     }
 
@@ -91,25 +84,21 @@ const BookingForm = () => {
 
     const bookingData = {
       userId: user.id,
-      gameId: parseInt(selectedGameId),
-      roomId: parseInt(selectedRoomId),
+      gameId: Number(selectedGameId),
+      roomId: Number(selectedRoomId),
       startTime: `${date}T${selectedSlot}:00`,
       numberOfPlayers: numPlayers,
       totalAmount,
     };
 
     try {
-      if (bookingId) {
-        await bookingService.updateBooking(bookingId, bookingData);
-        setSuccess(
-          "Cập nhật booking thành công! Đang quay về trang lịch sử đặt phòng..."
-        );
-      } else {
-        await bookingService.createBooking(bookingData);
-        setSuccess(
-          "Đặt phòng thành công! Đang quay về trang lịch sử đặt phòng..."
-        );
-      }
+      bookingId
+        ? await bookingService.updateBooking(bookingId, bookingData)
+        : await bookingService.createBooking(bookingData);
+
+      setSuccess(
+        "Đặt phòng thành công! Đang quay về trang lịch sử đặt phòng..."
+      );
       setTimeout(() => navigate("/bookings"), 2000);
     } catch (err) {
       setError(err.response?.data?.message || "Lỗi khi lưu đơn đặt phòng.");
@@ -157,124 +146,101 @@ const BookingForm = () => {
         )}
 
         {/* Game */}
-        <div className="space-y-4">
-          {!gameId && (
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Chọn Game
-              </label>
-              <select
-                value={selectedGameId}
-                onChange={(e) => setSelectedGameId(e.target.value)}
-                className="input-base"
-                required
-              >
-                <option value="">-- Chọn game --</option>
-                {games &&
-                  games.map((g) => (
-                    <option key={g.id} value={g.id}>
-                      {g.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
-          )}
+        {!gameId && (
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Chọn Game
+            </label>
+            <select
+              value={selectedGameId}
+              onChange={(e) => setSelectedGameId(e.target.value)}
+              className="input-base"
+              required
+            >
+              <option value="">-- Chọn game --</option>
+              {games.map((g) => (
+                <option key={g.id} value={g.id}>
+                  {g.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
-          {(gameId || selectedGameId) && game && (
-            <div className="p-4 border border-glass rounded-lg">
-              <h3 className="text-2xl font-display text-vr-blue-2">
-                {game.name}
-              </h3>
-              <p className="text-gray-400">
-                {game.duration} phút | {formatCurrency(game.price)} |{" "}
-                {game.maxPlayers} người chơi tối đa
-              </p>
-            </div>
-          )}
-        </div>
+        {game && (
+          <div className="p-4 border border-glass rounded-lg">
+            <h3 className="text-2xl font-display text-vr-blue-2">
+              {game.name}
+            </h3>
+            <p className="text-gray-400">
+              {game.duration} phút | {formatCurrency(game.price)} |{" "}
+              {game.maxPlayers} người chơi tối đa
+            </p>
+          </div>
+        )}
 
         {/* Room */}
-        <div className="space-y-4">
-          {!roomId && (
-            <div>
-              <label className="block text-sm font-medium text-gray-300 mb-2">
-                Chọn Phòng
-              </label>
-              <select
-                value={selectedRoomId}
-                onChange={(e) => setSelectedRoomId(e.target.value)}
-                className="input-base"
-                required
-              >
-                <option value="">-- Chọn phòng --</option>
-                {rooms &&
-                  rooms.map((r) => (
-                    <option key={r.id} value={r.id}>
-                      {r.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
-          )}
+        {!roomId && (
+          <div>
+            <label className="block text-sm font-medium text-gray-300 mb-2">
+              Chọn Phòng
+            </label>
+            <select
+              value={selectedRoomId}
+              onChange={(e) => setSelectedRoomId(e.target.value)}
+              className="input-base"
+              required
+            >
+              <option value="">-- Chọn phòng --</option>
+              {rooms.map((r) => (
+                <option key={r.id} value={r.id}>
+                  {r.name}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
-          {(roomId || selectedRoomId) && room && (
-            <div className="p-4 border border-glass rounded-lg">
-              <h3 className="text-2xl font-display text-vr-blue-2">
-                {room.name}
-              </h3>
-              <p className="text-gray-400">
-                {room.status} | Sức chứa {room.capacity} người
-              </p>
-            </div>
-          )}
-        </div>
+        {room && (
+          <div className="p-4 border border-glass rounded-lg">
+            <h3 className="text-2xl font-display text-vr-blue-2">
+              {room.name}
+            </h3>
+            <p className="text-gray-400">
+              {room.status} | Sức chứa {room.capacity} người
+            </p>
+          </div>
+        )}
 
-        {/* Ngày / Số người chơi */}
+        {/* Date / Players */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Chọn ngày
-            </label>
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="input-base"
-              min={new Date().toISOString().split("T")[0]}
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-300 mb-2">
-              Số người chơi
-            </label>
-            <input
-              type="number"
-              value={numPlayers}
-              onChange={(e) =>
-                setNumPlayers(
-                  Math.min(
-                    parseInt(e.target.value) || 1,
-                    game?.maxPlayers || 10
-                  )
-                )
-              }
-              className="input-base"
-              min="1"
-              max={game?.maxPlayers || 10}
-              required
-            />
-          </div>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="input-base"
+            min={new Date().toISOString().split("T")[0]}
+          />
+          <input
+            type="number"
+            value={numPlayers}
+            onChange={(e) =>
+              setNumPlayers(
+                Math.min(Number(e.target.value), game?.maxPlayers || 10)
+              )
+            }
+            className="input-base"
+            min="1"
+            max={game?.maxPlayers || 10}
+          />
         </div>
 
-        {/* TimeSLots */}
         <BookingSlots
           date={date}
           selectedSlot={selectedSlot}
           setSelectedSlot={setSelectedSlot}
         />
 
-        {/* Tổng tiền / submit */}
         <div className="border-t border-glass pt-6 space-y-4">
           <div className="flex justify-between text-2xl font-bold">
             <span className="text-gray-300">TỔNG CỘNG:</span>

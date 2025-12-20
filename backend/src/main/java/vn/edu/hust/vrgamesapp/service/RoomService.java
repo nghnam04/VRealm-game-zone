@@ -1,20 +1,28 @@
 package vn.edu.hust.vrgamesapp.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.edu.hust.vrgamesapp.constant.BookingStatus;
 import vn.edu.hust.vrgamesapp.constant.DeviceStatus;
+import vn.edu.hust.vrgamesapp.constant.GameGenre;
 import vn.edu.hust.vrgamesapp.constant.RoomStatus;
+import vn.edu.hust.vrgamesapp.dto.GameDto;
+import vn.edu.hust.vrgamesapp.dto.PageResponse;
 import vn.edu.hust.vrgamesapp.dto.RoomDto;
 import vn.edu.hust.vrgamesapp.entity.Device;
 import vn.edu.hust.vrgamesapp.entity.Game;
 import vn.edu.hust.vrgamesapp.entity.Room;
+import vn.edu.hust.vrgamesapp.mapper.GameMapper;
 import vn.edu.hust.vrgamesapp.mapper.RoomMapper;
 import vn.edu.hust.vrgamesapp.repository.BookingRepository;
 import vn.edu.hust.vrgamesapp.repository.DeviceRepository;
 import vn.edu.hust.vrgamesapp.repository.GameRepository;
 import vn.edu.hust.vrgamesapp.repository.RoomRepository;
+import vn.edu.hust.vrgamesapp.utils.PaginationUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,16 +96,46 @@ public class RoomService {
         return RoomMapper.mapToRoomDto(room);
     }
 
-    public List<RoomDto> getAllRooms(String status, Integer capacity) {
-        List<Room> rooms;
+    public PageResponse<RoomDto> getAllRooms(
+            int pageNo, int pageSize, String sortBy, String sortDir,
+            String status, String name,
+            Integer minCapacity, Integer maxCapacity
+            ) {
+
+        Pageable pageable = PaginationUtils.buildPageable(pageNo, pageSize, sortBy, sortDir);
+
+        Specification<Room> spec = Specification.where(null);
+
         if (status != null && !status.isEmpty()) {
-            rooms = roomRepository.findByStatus(RoomStatus.valueOf(status.toUpperCase()));
-        } else if (capacity != null) {
-            rooms = roomRepository.findByCapacityGreaterThanEqual(capacity);
-        } else {
-            rooms = roomRepository.findAll();
+            try {
+                RoomStatus s = RoomStatus.valueOf(status.toUpperCase());
+                spec = spec.and((root, query, cb) -> cb.equal(root.get("status"), s));
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Invalid status: " + status);
+            }
         }
-        return rooms.stream().map(RoomMapper::mapToRoomDto).collect(Collectors.toList());
+
+        if (name != null && !name.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
+        }
+
+        if (minCapacity != null) spec = spec.and((root, query, cb) -> cb.ge(root.get("duration"), minCapacity));
+        if (maxCapacity != null) spec = spec.and((root, query, cb) -> cb.le(root.get("duration"), maxCapacity));
+
+        Page<Room> page = roomRepository.findAll(spec, pageable);
+
+        List<RoomDto> content = page.getContent().stream()
+                .map(RoomMapper::mapToRoomDto)
+                .collect(Collectors.toList());
+
+        return new PageResponse<>(
+                content,
+                page.getNumber(),
+                page.getSize(),
+                (int) page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
     }
 
     @Transactional

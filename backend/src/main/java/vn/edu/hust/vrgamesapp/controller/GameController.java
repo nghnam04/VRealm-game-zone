@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hust.vrgamesapp.dto.GameDto;
+import vn.edu.hust.vrgamesapp.dto.PageResponse;
 import vn.edu.hust.vrgamesapp.service.GameService;
+import vn.edu.hust.vrgamesapp.utils.AppConstants;
 
 import java.util.List;
 
@@ -29,8 +31,25 @@ public class GameController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GameDto>> getAllGames(@RequestParam(required = false) String genre) {
-        return ResponseEntity.ok(gameService.getAllGames(genre));
+    public ResponseEntity<PageResponse<GameDto>> getAllGames(
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION) String sortDir,
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Integer minDuration,
+            @RequestParam(required = false) Integer maxDuration,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Integer minPlayers,
+            @RequestParam(required = false) Integer maxPlayers
+    ) {
+        return ResponseEntity.ok(gameService.getAllGames(
+                pageNo, pageSize, sortBy, sortDir,
+                genre, name, minDuration, maxDuration,
+                minPrice, maxPrice, minPlayers, maxPlayers
+        ));
     }
 
     @PutMapping("/{id}")

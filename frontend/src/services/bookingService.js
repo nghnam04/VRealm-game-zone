@@ -1,12 +1,11 @@
 import axiosInstance from "../api/axios";
 
 const bookingService = {
-  getAllBookings: () => axiosInstance.get("/bookings"),
+  getAllBookings: (params = {}) => axiosInstance.get("/bookings", { params }),
 
   getBookingById: (id) => axiosInstance.get(`/bookings/${id}`),
 
   getMyBookings: () => axiosInstance.get("/bookings/user/me"),
-
 
   createBooking: (bookingData) => axiosInstance.post("/bookings", bookingData),
 

@@ -28,7 +28,17 @@ INSERT INTO users (id, name, email, username, password, role_id) VALUES
 (17, 'Quang Truong', 'quang.truong@vrgame.com', 'quang_truong', '$2a$10$ZmUg.8tMEYWSyLb7vvOPo.afF0bvSew82tOJ8i65Ussnn/RnFYoBi', 3),
 (18, 'Rita Dang', 'rita.dang@vrgame.com', 'rita_dang', '$2a$10$.lk4aeKEXIV.ddMDirB7cu0RMJXBCHhMxqSj0NnrCk8hELDg4v63O', 3),
 (19, 'Sam Vo', 'sam.vo@vrgame.com', 'sam_vo', '$2a$10$gZYRhW4JPb8OBjq4INsnN.smw/xTgwPDe0s9/FXEQCEK1GQiJVV.O', 3),
-(20, 'Tina Ha', 'tina.ha@vrgame.com', 'tina_ha', '$2a$10$qijcxYnODfX6jfl5x2eCYeb0gLzTHyKFD3o45UgUfyiGKPYA1TiIG', 3);
+(20, 'Tina Ha', 'tina.ha@vrgame.com', 'tina_ha', '$2a$10$qijcxYnODfX6jfl5x2eCYeb0gLzTHyKFD3o45UgUfyiGKPYA1TiIG', 3),
+(21, 'Victor Lam', 'victor.lam@vrgame.com', 'victor_lam', '$2a$10$jHimPS2ytGxB3/CvxVU2G.Trt/KcRwYtKRidzekAi0OXuyZzOoyJ6', 3),
+(22, 'Wendy Le', 'wendy.le@vrgame.com', 'wendy_le', '$2a$10$3E/PczrpBeYpu11KODREXOhZwP.QiKtbIv5ZeOa4iaGqv.ozVVpOW', 3),
+(23, 'Xander Pham', 'xander.pham@vrgame.com', 'xander_pham', '$2a$10$OHaYu5jVaH3P9fy1p4gFc.VrpAElNUc.Tie6hX6B49SuxssX5iKRy', 3),
+(24, 'Yara Tran', 'yara.tran@vrgame.com', 'yara_tran', '$2a$10$CqofCfAdHlT2C89uf3Wt/exJN8pQnqIXvL5uwicZLjmZTZsjQ8Aua', 3),
+(25, 'Zack Nguyen', 'zack.nguyen@vrgame.com', 'zack_nguyen', '$2a$10$lWnXXau8LLuEEihIaGVbOejhBAxuYnqY8UGiKlHFOH2NpaAzfVGWa', 3),
+(26, 'Alice Ho', 'alice.ho@vrgame.com', 'alice_ho', '$2a$10$YjvPGbuuDDx94NBkoHhLj..0yTJ7RuvF9rVZ08fEV5p1UMJh/klU.', 3),
+(27, 'Brian Kim', 'brian.kim@vrgame.com', 'brian_kim', '$2a$10$3pgj6IYbAQ2r6IvMdjH7jOfx78KKtKGMhlqEvoYj58phgl.FacYWa', 3),
+(28, 'Cindy Pham', 'cindy.pham@vrgame.com', 'cindy_pham', '$2a$10$9z7UCq5iagBins1ljvte0.lDIgqiHAHeOtXF2FqrEGw7c5Ri6s5Mq', 3),
+(29, 'David Vu', 'david.vu@vrgame.com', 'david_vu', '$2a$10$X/fUWBfH7OwWAuBd243It./oh.kmpr5e/vymXl7I1r4y5/C8XD956', 3),
+(30, 'Eva Dao', 'eva.dao@vrgame.com', 'eva_dao', '$2a$10$yDvV5sTMgKwwYL5KQRxIPOF8L0DSWwtEDBCuVoIj.eyeax6NBhy3.', 3);
 
 -- Insert Games
 INSERT INTO games (id, name, genre, description, duration, price, max_players, image_url) VALUES
@@ -41,20 +51,56 @@ INSERT INTO games (id, name, genre, description, duration, price, max_players, i
 (7, 'Action Shooter VR', 'ACTION', 'Multiplayer shooting action', 65, 140.00, 5, 'https://images.unsplash.com/photo-1646063152596-fdc70092b1e4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1414'),
 (8, 'Haunted Mansion VR', 'HORROR', 'Explore the haunted house', 60, 120.00, 3, 'https://images.unsplash.com/photo-1639326605644-ffbfce9fe3df?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1472'),
 (9, 'Simulation City VR', 'SIMULATION', 'Build and manage a city', 80, 250.00, 1, 'https://images.unsplash.com/photo-1701497429720-a8c202753f9c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1470'),
-(10, 'Underwater Explorer VR', 'ADVENTURE', 'Dive and discover ocean life', 80, 160.00, 4, 'https://images.unsplash.com/photo-1608209957132-587daea098f3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1374');
+(10, 'Underwater Explorer VR', 'ADVENTURE', 'Dive and discover ocean life', 80, 160.00, 4, 'https://images.unsplash.com/photo-1608209957132-587daea098f3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1374'),
+(11, 'Cyberpunk Chase VR', 'ACTION', 'Futuristic city chase', 90, 180.00, 4, 'https://img.freepik.com/free-photo/collage-cyber-punk-portrait_52683-103756.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(12, 'Jungle Safari VR', 'ADVENTURE', 'Explore wild jungles', 80, 150.00, 5, 'https://images.pexels.com/photos/982021/pexels-photo-982021.jpeg?_gl=1*8d6v3t*_ga*NzE4MDIyMzA5LjE3NTk4MTI2NjE.*_ga_8JE65Q40S6*czE3NjU5MDk4OTgkbzkkZzEkdDE3NjU5MTEwNDQkajU5JGwwJGgw'),
+(13, 'Haunted Carnival VR', 'HORROR', 'Spooky carnival adventure', 70, 130.00, 3, 'https://img.freepik.com/free-photo/scary-skeleton-costum-with-pumpkin_329181-16595.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(14, 'Magic Academy VR', 'PUZZLE', 'Solve magical puzzles', 60, 120.00, 4, 'https://img.freepik.com/free-photo/child-magic-school-learning-spells_23-2150170069.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(15, 'VR Golf Tournament', 'SPORTS', 'Multiplayer golf simulation', 90, 140.00, 6, 'https://img.freepik.com/free-photo/side-view-man-playing-golf-with-club_23-2148822933.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(16, 'Alien Invasion VR', 'ACTION', 'Defend Earth from aliens', 85, 160.00, 4, 'https://img.freepik.com/free-vector/alien-spacecraft_1268-45.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(17, 'Deep Sea VR', 'ADVENTURE', 'Explore ocean depths', 75, 130.00, 4, 'https://img.freepik.com/free-photo/shooting-underwater_72229-1416.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(18, 'Haunted Forest VR', 'HORROR', 'Escape haunted forest', 70, 125.00, 3, 'https://img.freepik.com/free-photo/woman-dark-forest_1048-5196.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(19, 'Puzzle Kingdom VR', 'PUZZLE', 'Solve kingdom puzzles', 65, 115.00, 4, 'https://img.freepik.com/premium-photo/thoughtful-man-puzzle-road_670147-5197.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(20, 'VR Tennis Challenge', 'SPORTS', 'Compete in tennis matches', 60, 120.00, 2, 'https://img.freepik.com/free-photo/tennis-player-holding-racket_23-2147644491.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(21, 'Dragon Quest VR', 'ADVENTURE', 'Slay dragons in VR', 100, 200.00, 5, 'https://images.unsplash.com/photo-1724355198376-05df48bd251a?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(22, 'Speed Racer VR', 'RACING', 'High-speed racing fun', 70, 110.00, 2, 'https://img.freepik.com/free-photo/extreme-sports-activity-risk-concept_343059-637.jpg?t=st=1765912377~exp=1765915977~hmac=ce7ca176eb5fc4464970258297379a4d39f83a1f35aa32292c1bc0925628644f&w=740'),
+(23, 'Zombie Lab VR', 'HORROR', 'Survive zombie outbreak', 80, 150.00, 4, 'https://images.unsplash.com/photo-1526547462705-121430d02c2c?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(24, 'Wizard Duel VR', 'ACTION', 'Battle as a wizard', 90, 170.00, 3, 'https://images.unsplash.com/photo-1551269901-5c5e14c25df7?q=80&w=1469&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(25, 'VR Space Race', 'RACING', 'Race in space arenas', 75, 140.00, 5, 'https://img.freepik.com/free-photo/space-travel-concept-collage_52683-108587.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(26, 'Action Heroes VR', 'ACTION', 'Team battle simulator', 80, 160.00, 4, 'https://img.freepik.com/free-photo/world-collapse-doomsday-scene-digital-painting_456031-63.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(27, 'Mystery Island VR', 'PUZZLE', 'Solve island mysteries', 70, 130.00, 4, 'https://img.freepik.com/free-photo/mayan-horizontal-mountain-island-landscape_1122-2279.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(28, 'VR Bowling', 'SPORTS', 'Bowling simulation', 60, 110.00, 6, 'https://img.freepik.com/free-photo/bowling-ball-crashing-into-skittles_1160-666.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80');
 
 -- Insert Rooms
 INSERT INTO rooms (id, name, capacity, status, image_url) VALUES
-(1, 'Ocean Room', 4, 'AVAILABLE', 'https://images.unsplash.com/photo-1530053969600-caed2596d242?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1374'),
-(2, 'Sky Room', 6, 'AVAILABLE', 'https://images.unsplash.com/photo-1597200381847-30ec200eeb9a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2t5fGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=800'),
-(3, 'Dungeon Room', 3, 'IN_USE', 'https://images.unsplash.com/photo-1648372349535-99ddedd05ca4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8RHVuZ2VvbiUyMHJvb218ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=800'),
-(4, 'Space Room', 4, 'AVAILABLE', 'https://plus.unsplash.com/premium_photo-1669839137069-4166d6ea11f4?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3BhY2V8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&q=60&w=800'),
-(5, 'Racing Room', 6, 'BOOKED', 'https://images.unsplash.com/photo-1489731007795-388eee095ff6?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjd8fHJhY2luZ3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=800'),
+(1, 'Ocean Room', 4, 'AVAILABLE', 'https://img.freepik.com/free-photo/beautiful-photo-sea-sky_58702-10647.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(2, 'Sky Room', 6, 'AVAILABLE', 'https://img.freepik.com/free-photo/beautiful-sky-with-mountains-distance_1232-718.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(3, 'Dungeon Room', 3, 'IN_USE', 'https://img.freepik.com/free-photo/dark-scarry-tunnel-with-few-lights-castle_627829-6174.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(4, 'Space Room', 4, 'AVAILABLE', 'https://img.freepik.com/free-photo/space-background-with-fictional-planets_1048-13628.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(5, 'Racing Room', 6, 'BOOKED', 'https://img.freepik.com/free-photo/urban-traffic-road-with-cityscape-night_1359-1052.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
 (6, 'Haunted Room', 5, 'MAINTENANCE', 'https://images.unsplash.com/photo-1481018085669-2bc6e4f00eed?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGF1bnRlZCUyMGhvdXNlfGVufDB8fDB8fHww&auto=format&fit=crop&q=60&w=800'),
-(7, 'Fantasy Room', 4, 'AVAILABLE', 'https://images.unsplash.com/photo-1514539079130-25950c84af65?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1469'),
+(7, 'Fantasy Room', 4, 'AVAILABLE', 'https://img.freepik.com/free-photo/3d-silhouette-fantasy-unicorn-against-space-night-sky_1048-10471.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
 (8, 'Action Room', 6, 'IN_USE', 'https://images.unsplash.com/photo-1639932068669-9dccd9531338?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1374'),
-(9, 'Puzzle Room', 4, 'AVAILABLE', 'https://images.unsplash.com/photo-1590146758147-74a80644616a?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1471'),
-(10, 'Simulation Room', 5, 'BOOKED', 'https://plus.unsplash.com/premium_photo-1709845562321-2779276b5e65?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1457');
+(9, 'Puzzle Room', 4, 'AVAILABLE', 'https://img.freepik.com/free-photo/close-up-puzzle-background_23-2149289214.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(10, 'Simulation Room', 5, 'BOOKED', 'https://plus.unsplash.com/premium_photo-1709845562321-2779276b5e65?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1457'),
+(11, 'Cyber Room', 4, 'AVAILABLE', 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(12, 'Jungle Room', 5, 'AVAILABLE', 'https://images.unsplash.com/photo-1541959833400-049d37f98ccd?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(13, 'Haunted Room 2', 3, 'IN_USE', 'https://images.unsplash.com/photo-1536850428371-f12bc9f3159a?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(14, 'Magic Room', 4, 'AVAILABLE', 'https://images.unsplash.com/photo-1551029506-0807df4e2031?q=80&w=1934&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(15, 'Golf Room', 6, 'BOOKED', 'https://images.unsplash.com/photo-1632946269126-0f8edbe8b068?q=80&w=1431&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(16, 'Dragon Room', 5, 'AVAILABLE', 'https://images.unsplash.com/photo-1601987077677-5346c0c57d3f?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(17, 'Speed Room', 4, 'AVAILABLE', 'https://images.unsplash.com/photo-1578991132108-16c5296b63dc?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+(18, 'Zombie Room', 4, 'IN_USE', 'https://img.freepik.com/free-photo/hand-sticking-out-ground-near-heavy-fog_23-2147898935.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(19, 'Wizard Room', 3, 'AVAILABLE', 'https://img.freepik.com/free-photo/spot-light-top-hat-with-white-gloves-wand_23-2147880703.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(20, 'Island Room', 4, 'BOOKED', 'https://img.freepik.com/free-photo/sea-vacation-nature-paradise-tree_1203-3894.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(21, 'Adventure Room', 5, 'AVAILABLE', 'https://img.freepik.com/free-photo/traveller-sitting-rock-holding-camera-take-photo-doi-pha-mon-mountains-chiang-rai-thailand_335224-1078.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(22, 'Action Room 2', 4, 'AVAILABLE', 'https://img.freepik.com/free-photo/side-view-two-shirtless-hip-hop-artists-dancing_23-2148496992.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(23, 'Puzzle Room 2', 3, 'IN_USE', 'https://img.freepik.com/free-photo/close-up-puzzle-background_23-2149289258.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(24, 'Racing Room 2', 5, 'AVAILABLE', 'https://img.freepik.com/free-photo/generic-f1-car-with-special-speed-effect_1048-10213.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(25, 'VR Lab 1', 4, 'AVAILABLE', 'https://img.freepik.com/free-photo/concentrated-medical-researcher-using-digital-tablet-dressed-protective-suit-against-infection-with-coronavirus-team-scientists-conducting-vaccine-development-using-high-tech-technology-res_482257-5739.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(26, 'VR Lab 2', 4, 'IN_USE', 'https://img.freepik.com/free-photo/nurse-holding-tablet-computer-with-scientific-informations-while-chemist-using-microscope-with-chemical-test-tube-near_482257-552.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(27, 'VR Arena 1', 5, 'AVAILABLE', 'https://img.freepik.com/free-photo/basketball-court-with-people-fan-sport-arena-render-3d-illustration_654080-1445.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80'),
+(28, 'VR Arena 2', 5, 'BOOKED', 'https://img.freepik.com/free-vector/realistic-soccer-football-stadium-illustration_52683-60377.jpg?uid=R218372308&ga=GA1.1.77949387.1760451940&semt=ais_hybrid&w=740&q=80');
 
 -- Insert Room_Games
 INSERT INTO room_games (room_id, game_id) VALUES
@@ -67,7 +113,25 @@ INSERT INTO room_games (room_id, game_id) VALUES
 (7, 7),
 (8, 8),
 (9, 9),
-(10, 10);
+(10, 10),
+(11, 11),
+(12,12),
+(13,13),
+(14,14),
+(15,15),
+(16,16),
+(17,17),
+(18,18),
+(19,19),
+(20,20),
+(21,21),
+(22,22),
+(23,23),
+(24,24),
+(25,25),
+(26,26),
+(27,27),
+(28,28);
 
 -- Insert Devices
 INSERT INTO devices (id, room_id, name, type, status, quantity, image_url) VALUES
@@ -92,7 +156,18 @@ INSERT INTO devices (id, room_id, name, type, status, quantity, image_url) VALUE
 (17, null, 'Valve Index', 'HEADSET', 'IN_USE', 3, 'https://cdn.fastly.steamstatic.com/valvesoftware/images/index/HMD_3.jpg'),
 (18, null, 'Xbox One Controller', 'CONTROLLER', 'MAINTENANCE', 3, 'https://product.hstatic.net/200000637319/product/bdf1a7e3-261a-49dc-a863-0af85f145b8d_4d954dada4174811953abc06a0ce3a98.jpg'),
 (19, null, 'SteelSeries Arctis Pro', 'HEADPHONE', 'AVAILABLE', 2, 'https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lqleudhpz842b7@resize_w900_nl.webp'),
-(20, null, 'Pico Eye Tracking Cam', 'CAMERA', 'IN_USE', 1, 'https://lf16-statics.picovr.com/obj/pico-fe-sg/pico/pico_website/image/connect_1.88626afd.jpg');
+(20, null, 'Pico Eye Tracking Cam', 'CAMERA', 'IN_USE', 1, 'https://lf16-statics.picovr.com/obj/pico-fe-sg/pico/pico_website/image/connect_1.88626afd.jpg'),
+(21,11,'Meta Quest 3','HEADSET','AVAILABLE',4,'https://product.hstatic.net/200000785683/product/366803238_616934977221024_1160234829429705844_n_91d350a936ac4c1c850267b4df2cdbbb_large.png'),
+(22,12,'HTC Vive Pro','HEADSET','AVAILABLE',3,'https://www.droidshop.vn/wp-content/uploads/2020/01/Kinh-thuc-te-ao-HTC-Vive-Pro-eye-1.jpg'),
+(23,13,'Razer Nari','HEADPHONE','IN_USE',2,'https://www.phukiensamsung.com/Uploads/resize_tai-nghe-gaming-khong-day-tot-nhat-razer-nari-essential.jpg'),
+(24,14,'Logitech VR Motion Tracker','CONTROLLER','AVAILABLE',3,'https://www.uploadvr.com/content/images/2024/09/PICO-Motion-Trackers-Product-Image_3-Copy-1.png'),
+(25,15,'Bose QuietComfort VR','HEADPHONE','AVAILABLE',2,'https://bosebyupsv.com/wp-content/uploads/2023/11/SF_QCUH_deepplum_gallery_1_816x612_x2.webp'),
+(26,16,'Varjo Aero','HEADSET','AVAILABLE',3,'https://vr-expert.com/wp-content/uploads/2021/10/VarjoAero_3.png'),
+(27,17,'HP Reverb G2','HEADSET','IN_USE',2,'https://www.droidshop.vn/wp-content/uploads/2020/07/Kinh-thuc-te-ao-HP-Reverb-G2-2.jpg'),
+(28,18,'Thrustmaster VR Grip','CONTROLLER','AVAILABLE',3,'https://microless.com/cdn/products/bcc37bd6d9b70433600586e7f99688ad-hi.jpg'),
+(29,19,'Sennheiser VR One','HEADPHONE','IN_USE',2,'https://a.storyblok.com/f/49568/2325x2325/7af2478839/tps_1335_404871_march39748-404871n.jpg/m/1600x0/filters:quality(90)'),
+(30,20,'Magic Leap 2','HEADSET','AVAILABLE',7,'https://vr-expert.com/wp-content/uploads/2022/10/Magic-Leap-2-VR-Expert-Angle-600x600.png');
+
 
 -- Insert Bookings
 INSERT INTO bookings (id, user_id, game_id, room_id, start_time, end_time, status, number_of_players, total_amount, payment_status) VALUES
@@ -105,7 +180,17 @@ INSERT INTO bookings (id, user_id, game_id, room_id, start_time, end_time, statu
 (7, 13, 4, 4, DATE(NOW() - INTERVAL 3 DAY) + INTERVAL 20 HOUR, DATE(NOW() - INTERVAL 3 DAY) + INTERVAL 21 HOUR + INTERVAL 15 MINUTE, 'PENDING', 3, 488.00, 'UNPAID'),
 (8, 14, 5, 5, DATE(NOW() - INTERVAL 4 DAY) + INTERVAL 8 HOUR, DATE(NOW() - INTERVAL 4 DAY) + INTERVAL 9 HOUR, 'ACCEPTED', 5, 550.00, 'PAID'),
 (9, 15, 7, 7, DATE(NOW() - INTERVAL 6 DAY) + INTERVAL 10 HOUR, DATE(NOW() - INTERVAL 6 DAY) + INTERVAL 11 HOUR + INTERVAL 5 MINUTE, 'PENDING', 5, 758.00, 'UNPAID'),
-(10, 16, 8, 8, DATE(NOW() - INTERVAL 7 DAY) + INTERVAL 12 HOUR, DATE(NOW() - INTERVAL 7 DAY) + INTERVAL 13 HOUR, 'ACCEPTED', 3, 360.00, 'PAID');
+(10, 16, 8, 8, DATE(NOW() - INTERVAL 7 DAY) + INTERVAL 12 HOUR, DATE(NOW() - INTERVAL 7 DAY) + INTERVAL 13 HOUR, 'ACCEPTED', 3, 360.00, 'PAID'),
+(11,21,11,11,DATE(NOW()) + INTERVAL 2 DAY + INTERVAL 10 HOUR,DATE(NOW()) + INTERVAL 2 DAY + INTERVAL 11 HOUR,'PENDING',4,720.00,'UNPAID'),
+(12,22,12,12,DATE(NOW()) + INTERVAL 3 DAY + INTERVAL 14 HOUR,DATE(NOW()) + INTERVAL 3 DAY + INTERVAL 15 HOUR + INTERVAL 30 MINUTE,'ACCEPTED',5,750.00,'PAID'),
+(13,23,13,13,DATE(NOW()) + INTERVAL 4 DAY + INTERVAL 16 HOUR,DATE(NOW()) + INTERVAL 4 DAY + INTERVAL 17 HOUR,'ACCEPTED',3,390.00,'PAID'),
+(14,24,14,14,DATE(NOW()) + INTERVAL 5 DAY + INTERVAL 18 HOUR,DATE(NOW()) + INTERVAL 5 DAY + INTERVAL 19 HOUR,'PENDING',4,480.00,'UNPAID'),
+(15,25,15,15,DATE(NOW()) + INTERVAL 6 DAY + INTERVAL 12 HOUR,DATE(NOW()) + INTERVAL 6 DAY + INTERVAL 13 HOUR + INTERVAL 30 MINUTE,'PENDING',6,840.00,'UNPAID'),
+(16,26,16,16,DATE(NOW()) + INTERVAL 7 DAY + INTERVAL 10 HOUR,DATE(NOW()) + INTERVAL 7 DAY + INTERVAL 11 HOUR,'ACCEPTED',5,800.00,'PAID'),
+(17,27,17,17,DATE(NOW()) + INTERVAL 8 DAY + INTERVAL 14 HOUR,DATE(NOW()) + INTERVAL 8 DAY + INTERVAL 15 HOUR,'ACCEPTED',4,640.00,'PAID'),
+(18,28,18,18,DATE(NOW()) + INTERVAL 9 DAY + INTERVAL 16 HOUR,DATE(NOW()) + INTERVAL 9 DAY + INTERVAL 17 HOUR,'PENDING',3,480.00,'UNPAID'),
+(19,29,19,19,DATE(NOW()) + INTERVAL 10 DAY + INTERVAL 18 HOUR,DATE(NOW()) + INTERVAL 10 DAY + INTERVAL 19 HOUR,'PENDING',4,520.00,'UNPAID'),
+(20,30,20,20,DATE(NOW()) + INTERVAL 11 DAY + INTERVAL 12 HOUR,DATE(NOW()) + INTERVAL 11 DAY + INTERVAL 13 HOUR,'ACCEPTED',5,600.00,'PAID');
 
 -- Insert Feedbacks
 INSERT INTO feedbacks (id, user_id, booking_id, rating, comment, feedback_date) VALUES
@@ -114,11 +199,21 @@ INSERT INTO feedbacks (id, user_id, booking_id, rating, comment, feedback_date) 
 (3, 9, 3, 3, 'City simulation was interesting', NOW() - INTERVAL 8 DAY),
 (4, 10, 4, 4, 'Underwater exploration was breathtaking', NOW() - INTERVAL 9 DAY),
 (5, 11, 5, 4, 'Good experience but could be longer', NOW() - INTERVAL 1 DAY),
-(6, 12, 6, 5, 'Incredible graphics and fun gameplay', NOW() - INTERVAL 1 DAY),
+(6, 12, 6, 2, 'Bad graphics and boring gameplay', NOW() - INTERVAL 1 DAY),
 (7, 13, 7, 3, 'Average experience, needs improvement', NOW() - INTERVAL 3 DAY),
 (8, 14, 8, 3, 'Loved every moment in the sports arena', NOW() - INTERVAL 4 DAY),
 (9, 15, 9, 4, 'Nice adventure, headset was smooth', NOW() - INTERVAL 6 DAY),
-(10, 16, 10, 4, 'Excellent quality and thrilling session!', NOW() - INTERVAL 7 DAY);
+(10, 16, 10, 4, 'Excellent quality and thrilling session!', NOW() - INTERVAL 7 DAY),
+(11,21,11,5,'Amazing futuristic city experience',NOW() - INTERVAL 1 DAY),
+(12,22,12,4,'Jungle exploration was fun',NOW() - INTERVAL 2 DAY),
+(13,23,13,3,'Carnival was spooky but fun',NOW() - INTERVAL 3 DAY),
+(14,24,14,4,'Magic puzzles were challenging',NOW() - INTERVAL 2 DAY),
+(15,25,15,5,'Golf felt very realistic',NOW() - INTERVAL 1 DAY),
+(16,26,16,5,'Alien invasion intense and fun',NOW() - INTERVAL 1 DAY),
+(17,27,17,4,'Deep Sea VR amazing graphics',NOW() - INTERVAL 2 DAY),
+(18,28,18,3,'Haunted forest was scary',NOW() - INTERVAL 3 DAY),
+(19,29,19,1,'Puzzle kingdom was disappointing',NOW() - INTERVAL 2 DAY),
+(20,30,20,5,'VR Tennis Challenge was smooth',NOW() - INTERVAL 1 DAY);
 
 -- Mock status logs trong 30 ngày
 INSERT INTO status_logs (component, status, timestamp, message) VALUES

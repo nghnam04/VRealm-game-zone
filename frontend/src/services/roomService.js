@@ -1,7 +1,7 @@
 import axiosInstance from "../api/axios";
 
 const roomService = {
-  getAllRooms: () => axiosInstance.get("/rooms"),
+  getAllRooms: (params = {}) => axiosInstance.get("/rooms", { params }),
 
   getRoomById: (id) => axiosInstance.get(`/rooms/${id}`),
 

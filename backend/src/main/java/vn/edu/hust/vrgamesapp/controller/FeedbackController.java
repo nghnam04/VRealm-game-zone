@@ -8,8 +8,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hust.vrgamesapp.dto.FeedbackDto;
+import vn.edu.hust.vrgamesapp.dto.PageResponse;
 import vn.edu.hust.vrgamesapp.service.FeedbackService;
+import vn.edu.hust.vrgamesapp.utils.AppConstants;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -38,8 +41,23 @@ public class FeedbackController {
     }
 
     @GetMapping
-    public ResponseEntity<List<FeedbackDto>> getAllFeedbacks() {
-        return ResponseEntity.ok(feedbackService.getAllFeedbacks());
+    public ResponseEntity<PageResponse<FeedbackDto>> getAllFeedbacks(
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION) String sortDir,
+            @RequestParam(required = false) String gameName,
+            @RequestParam(required = false) String roomName,
+            @RequestParam(required = false) Integer minRating,
+            @RequestParam(required = false) Integer maxRating,
+            @RequestParam(required = false) LocalDate fromDate,
+            @RequestParam(required = false) LocalDate toDate
+            ) {
+        return ResponseEntity.ok(feedbackService.getAllFeedbacks(
+                pageNo, pageSize, sortBy, sortDir,
+                gameName, roomName,
+                minRating, maxRating, fromDate, toDate
+        ));
     }
 
     @PutMapping("/{id}")

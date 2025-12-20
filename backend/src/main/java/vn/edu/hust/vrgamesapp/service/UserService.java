@@ -1,15 +1,25 @@
 package vn.edu.hust.vrgamesapp.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vn.edu.hust.vrgamesapp.constant.GameGenre;
+import vn.edu.hust.vrgamesapp.constant.RoleEnum;
+import vn.edu.hust.vrgamesapp.dto.GameDto;
+import vn.edu.hust.vrgamesapp.dto.PageResponse;
 import vn.edu.hust.vrgamesapp.dto.UserDto;
+import vn.edu.hust.vrgamesapp.entity.Game;
 import vn.edu.hust.vrgamesapp.entity.Role;
 import vn.edu.hust.vrgamesapp.entity.User;
+import vn.edu.hust.vrgamesapp.mapper.GameMapper;
 import vn.edu.hust.vrgamesapp.mapper.UserMapper;
 import vn.edu.hust.vrgamesapp.repository.RoleRepository;
 import vn.edu.hust.vrgamesapp.repository.UserRepository;
+import vn.edu.hust.vrgamesapp.utils.PaginationUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -53,11 +63,50 @@ public class UserService {
         return UserMapper.mapToUserDto(user);
     }
 
-    public List<UserDto> getAllUsers() {
-        return userRepository.findAll().stream()
-                .filter(user -> !"ADMIN".equalsIgnoreCase(user.getRole().getName().name()))
+public PageResponse<UserDto> getAllUsers(
+            int pageNo, int pageSize, String sortBy, String sortDir,
+            String name, String username, String email, String role
+            ) {
+
+        Pageable pageable = PaginationUtils.buildPageable(pageNo, pageSize, sortBy, sortDir);
+
+        Specification<User> spec = Specification.where(null);
+
+        if (role != null && !role.isEmpty()) {
+            try {
+                RoleEnum r = RoleEnum.valueOf(role.toUpperCase());
+                spec = spec.and((root, query, cb) -> cb.equal(root.get("role").get("name"), r));
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Invalid role: " + role);
+            }
+        }
+
+        if (name != null && !name.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
+        }
+
+        if (username != null && !username.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("username")), "%" + username.toLowerCase() + "%"));
+        }
+
+        if (email != null && !email.isEmpty()) {
+            spec = spec.and((root, query, cb) -> cb.like(cb.lower(root.get("email")), "%" + email.toLowerCase() + "%"));
+        }
+
+        Page<User> page = userRepository.findAll(spec, pageable);
+
+        List<UserDto> content = page.getContent().stream()
                 .map(UserMapper::mapToUserDto)
                 .collect(Collectors.toList());
+
+        return new PageResponse<>(
+                content,
+                page.getNumber(),
+                page.getSize(),
+                (int) page.getTotalElements(),
+                page.getTotalPages(),
+                page.isLast()
+        );
     }
 
     public UserDto getUserById(Long id) {

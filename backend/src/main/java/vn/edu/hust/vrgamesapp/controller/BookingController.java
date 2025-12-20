@@ -8,11 +8,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hust.vrgamesapp.dto.BookingDto;
+import vn.edu.hust.vrgamesapp.dto.PageResponse;
 import vn.edu.hust.vrgamesapp.service.BookingService;
+import vn.edu.hust.vrgamesapp.utils.AppConstants;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/bookings")
@@ -34,8 +35,36 @@ public class BookingController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<BookingDto>> getAllBookings() {
-        return ResponseEntity.ok(bookingService.getAllBookings());
+    public ResponseEntity<PageResponse<BookingDto>> getAllBookings(
+            @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int pageNo,
+            @RequestParam(defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int pageSize,
+            @RequestParam(defaultValue = AppConstants.DEFAULT_SORT_BY) String sortBy,
+            @RequestParam(defaultValue = AppConstants.DEFAULT_SORT_DIRECTION) String sortDir,
+            @RequestParam(required = false) String userName,
+            @RequestParam(required = false) String gameName,
+            @RequestParam(required = false) String roomName,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String paymentStatus,
+            @RequestParam(required = false) Integer minGameDuration,
+            @RequestParam(required = false) Integer maxGameDuration,
+            @RequestParam(required = false) LocalDate minStartTime,
+            @RequestParam(required = false) LocalDate maxStartTime,
+            @RequestParam(required = false) Integer minPlayers,
+            @RequestParam(required = false) Integer maxPlayers,
+            @RequestParam(required = false) Double minTotalAmount,
+            @RequestParam(required = false) Double maxTotalAmount
+    ) {
+        return ResponseEntity.ok(
+                bookingService.getAllBookings(
+                        pageNo, pageSize, sortBy, sortDir,
+                        userName, gameName, roomName,
+                        status, paymentStatus,
+                        minGameDuration, maxGameDuration,
+                        minStartTime, maxStartTime,
+                        minPlayers, maxPlayers,
+                        minTotalAmount, maxTotalAmount
+                )
+        );
     }
 
     @GetMapping("/user/me")

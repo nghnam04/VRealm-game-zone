@@ -1,7 +1,7 @@
 import axiosInstance from "../api/axios";
 
 const gameService = {
-  getAllGames: () => axiosInstance.get("/games"),
+  getAllGames: (params = {}) => axiosInstance.get("/games", { params }),
 
   getGameById: (id) => axiosInstance.get(`/games/${id}`),
 

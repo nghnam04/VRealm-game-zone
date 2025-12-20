@@ -7,7 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import vn.edu.hust.vrgamesapp.dto.DeviceDto;
+import vn.edu.hust.vrgamesapp.dto.GameDto;
+import vn.edu.hust.vrgamesapp.dto.PageResponse;
 import vn.edu.hust.vrgamesapp.service.DeviceService;
+import vn.edu.hust.vrgamesapp.utils.AppConstants;
 
 import java.util.List;
 
@@ -29,8 +32,23 @@ public class DeviceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DeviceDto>> getAllDevices() {
-        return ResponseEntity.ok(deviceService.getAllDevices());
+    public ResponseEntity<PageResponse<DeviceDto>> getAllDevices(
+            @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE) int pageSize,
+            @RequestParam(value = "sortBy", defaultValue = AppConstants.DEFAULT_SORT_BY) String sortBy,
+            @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION) String sortDir,
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String roomName,
+            @RequestParam(required = false) Integer minQuantity,
+            @RequestParam(required = false) Integer maxQuantity
+    ) {
+        return ResponseEntity.ok(deviceService.getAllDevices(
+                pageNo, pageSize, sortBy, sortDir,
+                name, type, status, roomName,
+                minQuantity, maxQuantity
+        ));
     }
 
     @PutMapping("/{id}")

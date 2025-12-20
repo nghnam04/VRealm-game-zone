@@ -32,5 +32,6 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false)
     private List<Device> devices = new ArrayList<>();
 
+    @Column(columnDefinition = "TEXT")
     private String imageUrl;
 }

@@ -1,7 +1,7 @@
 import axiosInstance from "../api/axios";
 
 const userService = {
-  getAllUsers: () => axiosInstance.get("/users"),
+  getAllUsers: (params = {}) => axiosInstance.get("/users", { params }),
 
   getUserById: (id) => axiosInstance.get(`/users/${id}`),
 

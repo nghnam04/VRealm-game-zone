@@ -11,9 +11,13 @@ const FeedbackCard = ({ feedback }) => (
         {formatTime(feedback.feedbackDate)}
       </span>
     </div>
+    <p className="text-sm text-cyan-500 font-semibold mb-3">
+      {feedback.gameName} -{" "}
+      <span className="text-amber-600">{feedback.roomName}</span>
+    </p>
     <p className="text-gray-300 italic mb-3">"{feedback.comment}"</p>
     <p className="text-sm text-vr-blue font-semibold">
-      Người dùng: {feedback.userName || "Ẩn danh"}
+      Khách hàng: {feedback.userName || "Ẩn danh"}
     </p>
   </div>
 );
