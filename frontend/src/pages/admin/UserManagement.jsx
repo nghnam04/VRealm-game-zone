@@ -97,7 +97,7 @@ const UserManagement = () => {
       alert(
         err?.response?.data?.message ||
           err?.response?.data ||
-          "Lỗi khi xóa người dùng"
+          "Không thể xóa người dùng có vai trò ADMIN"
       );
     }
   };

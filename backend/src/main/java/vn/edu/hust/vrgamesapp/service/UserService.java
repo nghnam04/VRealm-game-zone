@@ -163,9 +163,10 @@ public PageResponse<UserDto> getAllUsers(
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
 
-        if (user.getRole().getName().equals("ADMIN")) {
+        if (user.getRole().getName() == RoleEnum.ADMIN) {
             throw new RuntimeException("Cannot delete ADMIN user");
         }
+
         userRepository.delete(user);
     }
 }

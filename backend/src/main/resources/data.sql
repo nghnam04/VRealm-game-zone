@@ -104,68 +104,81 @@ INSERT INTO rooms (id, name, capacity, status, image_url) VALUES
 
 -- Insert Room_Games
 INSERT INTO room_games (room_id, game_id) VALUES
-(1, 1),
-(2, 2),
-(3, 3),
-(4, 4),
-(5, 5),
-(6, 6),
-(7, 7),
-(8, 8),
-(9, 9),
-(10, 10),
-(11, 11),
-(12,12),
-(13,13),
-(14,14),
-(15,15),
-(16,16),
-(17,17),
-(18,18),
-(19,19),
-(20,20),
-(21,21),
-(22,22),
-(23,23),
-(24,24),
-(25,25),
-(26,26),
-(27,27),
-(28,28);
+-- HORROR
+(3,1),(6,1),(13,1),(18,1),
+(3,8),(6,8),(13,8),
+(18,13),(6,13),
+
+-- RACING
+(5,3),(17,3),(24,3),
+(5,22),(17,22),
+(24,25),(17,25),
+
+-- SPORTS
+(2,5),(15,5),(27,5),
+(2,15),(15,15),(27,15),
+(2,20),(27,20),
+
+-- ADVENTURE
+(1,2),(4,2),(7,2),(12,2),
+(1,6),(4,6),(7,6),
+(12,10),(21,10),
+(1,17),(12,17),
+
+-- ACTION
+(8,7),(22,7),(27,7),
+(8,11),(22,11),
+(16,16),(22,16),
+(19,24),(22,24),
+(27,26),
+
+-- PUZZLE
+(9,4),(14,4),(23,4),
+(9,14),(14,14),
+(9,19),(23,19),
+(9,27),(23,27),
+
+-- SIMULATION
+(10,9),(25,9),
+(10,28),(25,28),
+
+-- MIX
+(1,21),(4,21),(21,21),
+(7,12),(12,12),
+(16,18),(18,18);
 
 -- Insert Devices
 INSERT INTO devices (id, room_id, name, type, status, quantity, image_url) VALUES
 -- Gắn phòng
 (1, 1, 'Oculus Quest 2', 'HEADSET', 'AVAILABLE', 5, 'https://images-cdn.ubuy.ae/633aaa81549a314c872ace0e-oculus-quest-2-advanced-all-in-one.jpg'),
-(2, 1, 'Steam Controller', 'CONTROLLER', 'MAINTENANCE', 2, 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/353370/ss_d2f5e7325666df6119ff1d42be73bac9594c5b1e.1920x1080.jpg?t=1576276946'),
-(3, 2, 'Sony VR Headphones', 'HEADPHONE', 'AVAILABLE', 3, 'https://sony.scene7.com/is/image/sonyglobalsolutions/wh-ch520_Primary_image?$S7Product$&fmt=png-alpha'),
-(4, 2, 'HTC Base Station 2.0', 'SENSOR', 'AVAILABLE', 2, 'https://vortexvr.de/cdn/shop/products/valve-index-steam-vr-base-station-20-base-station-20-866509.jpg?v=1667030014'),
-(5, 3, 'Logitech C920 HD Pro', 'CAMERA', 'IN_USE', 3, 'https://microthuam.com/Uploadimage/product/webcam-ghi-hinh-logitech-c922-full-hd-thongaudio-hang-chinh-hang.jpg'),
-(6, 3, 'Blue Yeti Mic', 'MICROPHONE', 'MAINTENANCE', 2, 'https://img.lazcdn.com/g/p/0c2c4140964ed69b1a78752d95622963.jpg_720x720q80.jpg'),
-(7, 4, 'Oculus Rift S', 'HEADSET', 'AVAILABLE', 4, 'https://roadtovrlive-5ea0.kxcdn.com/wp-content/uploads/2019/03/oculus-rift-s-1-1.jpg'),
+(2, 1, 'Steam Controller', 'CONTROLLER', 'MAINTENANCE', 6, 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/353370/ss_d2f5e7325666df6119ff1d42be73bac9594c5b1e.1920x1080.jpg?t=1576276946'),
+(3, 2, 'Sony VR Headphones', 'HEADPHONE', 'AVAILABLE', 6, 'https://sony.scene7.com/is/image/sonyglobalsolutions/wh-ch520_Primary_image?$S7Product$&fmt=png-alpha'),
+(4, 2, 'HTC Base Station 2.0', 'SENSOR', 'AVAILABLE', 6, 'https://vortexvr.de/cdn/shop/products/valve-index-steam-vr-base-station-20-base-station-20-866509.jpg?v=1667030014'),
+(5, 3, 'Logitech C920 HD Pro', 'CAMERA', 'IN_USE', 4, 'https://microthuam.com/Uploadimage/product/webcam-ghi-hinh-logitech-c922-full-hd-thongaudio-hang-chinh-hang.jpg'),
+(6, 3, 'Blue Yeti Mic', 'MICROPHONE', 'MAINTENANCE', 3, 'https://img.lazcdn.com/g/p/0c2c4140964ed69b1a78752d95622963.jpg_720x720q80.jpg'),
+(7, 4, 'Oculus Rift S', 'HEADSET', 'AVAILABLE', 7, 'https://roadtovrlive-5ea0.kxcdn.com/wp-content/uploads/2019/03/oculus-rift-s-1-1.jpg'),
 (8, 4, 'Valve Controller', 'CONTROLLER', 'AVAILABLE', 3, 'https://hi-tech.ua/wp-content/uploads/2024/06/horipad.jpg'),
-(9, 5, 'HyperX Cloud II', 'HEADPHONE', 'IN_USE', 3, 'https://cdn2.fptshop.com.vn/unsafe/564x0/filters:quality(80)/Uploads/images/2015/VuTT29/Tai%20nghe%20HyperX%20Cloud%20II%20wireless%20-%20Red%201.jpg'),
-(10, 5, 'Valve Lighthouse', 'SENSOR', 'AVAILABLE', 3, 'https://cdn.fastly.steamstatic.com/valvesoftware/images/index/BS_3.jpg'),
--- Không gắn phòng(dự phòng)
-(11, null, 'Oculus Quest Pro', 'HEADSET', 'IN_USE', 2, 'https://www.droidshop.vn/wp-content/uploads/2022/09/Kinh-thuc-te-ao-Meta-Quest-Pro-3.jpg'),
-(12, null, 'HTC Controller', 'CONTROLLER', 'IN_USE', 4, 'https://guide-images.cdn.ifixit.com/igi/YmfW1LDpjqqIIEcP.medium'),
-(13, null, 'Razer Kraken 7.1', 'HEADPHONE', 'AVAILABLE', 3, 'https://songphuong.vn/Content/uploads/2018/07/6363.jpg'),
-(14, null, 'Oculus Tracking Sensor', 'SENSOR', 'IN_USE', 2, 'https://www.amvrshop.com/cdn/shop/files/22.png?v=1723628226'),
-(15, null, 'Sony PS Eye Camera', 'CAMERA', 'AVAILABLE', 1, 'https://upload.wikimedia.org/wikipedia/commons/4/42/Sony-PlayStation-3-Eye.png'),
-(16, null, 'Razer Seiren X', 'MICROPHONE', 'AVAILABLE', 2, 'https://nvs.tn-cdn.net/2020/03/Mic-Razer-Seiren-X-Mercury-2.jpg'),
-(17, null, 'Valve Index', 'HEADSET', 'IN_USE', 3, 'https://cdn.fastly.steamstatic.com/valvesoftware/images/index/HMD_3.jpg'),
-(18, null, 'Xbox One Controller', 'CONTROLLER', 'MAINTENANCE', 3, 'https://product.hstatic.net/200000637319/product/bdf1a7e3-261a-49dc-a863-0af85f145b8d_4d954dada4174811953abc06a0ce3a98.jpg'),
-(19, null, 'SteelSeries Arctis Pro', 'HEADPHONE', 'AVAILABLE', 2, 'https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lqleudhpz842b7@resize_w900_nl.webp'),
-(20, null, 'Pico Eye Tracking Cam', 'CAMERA', 'IN_USE', 1, 'https://lf16-statics.picovr.com/obj/pico-fe-sg/pico/pico_website/image/connect_1.88626afd.jpg'),
-(21,11,'Meta Quest 3','HEADSET','AVAILABLE',4,'https://product.hstatic.net/200000785683/product/366803238_616934977221024_1160234829429705844_n_91d350a936ac4c1c850267b4df2cdbbb_large.png'),
-(22,12,'HTC Vive Pro','HEADSET','AVAILABLE',3,'https://www.droidshop.vn/wp-content/uploads/2020/01/Kinh-thuc-te-ao-HTC-Vive-Pro-eye-1.jpg'),
-(23,13,'Razer Nari','HEADPHONE','IN_USE',2,'https://www.phukiensamsung.com/Uploads/resize_tai-nghe-gaming-khong-day-tot-nhat-razer-nari-essential.jpg'),
+(9, 5, 'HyperX Cloud II', 'HEADPHONE', 'IN_USE', 8, 'https://cdn2.fptshop.com.vn/unsafe/564x0/filters:quality(80)/Uploads/images/2015/VuTT29/Tai%20nghe%20HyperX%20Cloud%20II%20wireless%20-%20Red%201.jpg'),
+(10, 5, 'Valve Lighthouse', 'SENSOR', 'AVAILABLE', 5, 'https://cdn.fastly.steamstatic.com/valvesoftware/images/index/BS_3.jpg'),
+(11, 22, 'Oculus Quest Pro', 'HEADSET', 'IN_USE', 6, 'https://www.droidshop.vn/wp-content/uploads/2022/09/Kinh-thuc-te-ao-Meta-Quest-Pro-3.jpg'),
+(12, 21, 'HTC Controller', 'CONTROLLER', 'IN_USE', 4, 'https://guide-images.cdn.ifixit.com/igi/YmfW1LDpjqqIIEcP.medium'),
+(13, 23, 'Razer Kraken 7.1', 'HEADPHONE', 'AVAILABLE', 3, 'https://songphuong.vn/Content/uploads/2018/07/6363.jpg'),
+(14, 24, 'Oculus Tracking Sensor', 'SENSOR', 'IN_USE', 5, 'https://www.amvrshop.com/cdn/shop/files/22.png?v=1723628226'),
+(15, 25, 'Sony PS Eye Camera', 'CAMERA', 'AVAILABLE', 4, 'https://upload.wikimedia.org/wikipedia/commons/4/42/Sony-PlayStation-3-Eye.png'),
+(16, 26, 'Razer Seiren X', 'MICROPHONE', 'AVAILABLE', 5, 'https://nvs.tn-cdn.net/2020/03/Mic-Razer-Seiren-X-Mercury-2.jpg'),
+(17, 27, 'Valve Index', 'HEADSET', 'IN_USE', 7, 'https://cdn.fastly.steamstatic.com/valvesoftware/images/index/HMD_3.jpg'),
+(18, 28, 'Xbox One Controller', 'CONTROLLER', 'MAINTENANCE', 8, 'https://product.hstatic.net/200000637319/product/bdf1a7e3-261a-49dc-a863-0af85f145b8d_4d954dada4174811953abc06a0ce3a98.jpg'),
+(19, null, 'SteelSeries Arctis Pro', 'HEADPHONE', 'AVAILABLE', 7, 'https://down-vn.img.susercontent.com/file/vn-11134201-7r98o-lqleudhpz842b7@resize_w900_nl.webp'),
+(20, null, 'Pico Eye Tracking Cam', 'CAMERA', 'AVAILABLE', 6, 'https://lf16-statics.picovr.com/obj/pico-fe-sg/pico/pico_website/image/connect_1.88626afd.jpg'),
+(21,null,'Meta Quest 3','HEADSET','AVAILABLE',5,'https://product.hstatic.net/200000785683/product/366803238_616934977221024_1160234829429705844_n_91d350a936ac4c1c850267b4df2cdbbb_large.png'),
+(22,null,'HTC Vive Pro','HEADSET','AVAILABLE',3,'https://www.droidshop.vn/wp-content/uploads/2020/01/Kinh-thuc-te-ao-HTC-Vive-Pro-eye-1.jpg'),
+(23,null,'Razer Nari','HEADPHONE','IN_USE',6,'https://www.phukiensamsung.com/Uploads/resize_tai-nghe-gaming-khong-day-tot-nhat-razer-nari-essential.jpg'),
 (24,14,'Logitech VR Motion Tracker','CONTROLLER','AVAILABLE',3,'https://www.uploadvr.com/content/images/2024/09/PICO-Motion-Trackers-Product-Image_3-Copy-1.png'),
 (25,15,'Bose QuietComfort VR','HEADPHONE','AVAILABLE',2,'https://bosebyupsv.com/wp-content/uploads/2023/11/SF_QCUH_deepplum_gallery_1_816x612_x2.webp'),
 (26,16,'Varjo Aero','HEADSET','AVAILABLE',3,'https://vr-expert.com/wp-content/uploads/2021/10/VarjoAero_3.png'),
-(27,17,'HP Reverb G2','HEADSET','IN_USE',2,'https://www.droidshop.vn/wp-content/uploads/2020/07/Kinh-thuc-te-ao-HP-Reverb-G2-2.jpg'),
-(28,18,'Thrustmaster VR Grip','CONTROLLER','AVAILABLE',3,'https://microless.com/cdn/products/bcc37bd6d9b70433600586e7f99688ad-hi.jpg'),
-(29,19,'Sennheiser VR One','HEADPHONE','IN_USE',2,'https://a.storyblok.com/f/49568/2325x2325/7af2478839/tps_1335_404871_march39748-404871n.jpg/m/1600x0/filters:quality(90)'),
+(27,17,'HP Reverb G2','HEADSET','IN_USE',4,'https://www.droidshop.vn/wp-content/uploads/2020/07/Kinh-thuc-te-ao-HP-Reverb-G2-2.jpg'),
+(28,18,'Thrustmaster VR Grip','CONTROLLER','AVAILABLE',5,'https://microless.com/cdn/products/bcc37bd6d9b70433600586e7f99688ad-hi.jpg'),
+(29,19,'Sennheiser VR One','HEADPHONE','IN_USE',6,'https://a.storyblok.com/f/49568/2325x2325/7af2478839/tps_1335_404871_march39748-404871n.jpg/m/1600x0/filters:quality(90)'),
 (30,20,'Magic Leap 2','HEADSET','AVAILABLE',7,'https://vr-expert.com/wp-content/uploads/2022/10/Magic-Leap-2-VR-Expert-Angle-600x600.png');
 
 

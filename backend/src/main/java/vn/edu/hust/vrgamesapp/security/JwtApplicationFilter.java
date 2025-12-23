@@ -19,7 +19,7 @@ import java.io.IOException;
 //Execute once per Request
 @Component
 @AllArgsConstructor
-public class JwtApplicationFilter extends OncePerRequestFilter{
+public class JwtApplicationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsService userDetailsService;
     private final TokenBlacklistService tokenBlacklistService;
@@ -33,40 +33,44 @@ public class JwtApplicationFilter extends OncePerRequestFilter{
         String token = getTokenFromRequest(request);
 
         //validate token
-        if(StringUtils.hasText(token)){
-            if (tokenBlacklistService.isTokenBlacklisted(token)) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token has been invalidated");
-                return;
+        try {
+            if (StringUtils.hasText(token)) {
+                if (tokenBlacklistService.isTokenBlacklisted(token)) {
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token has been invalidated");
+                    return;
+                }
+
+                if (jwtTokenProvider.validateToken(token)) {
+                    //get username from token
+                    String username = jwtTokenProvider.getUsername(token);
+
+                    //load the user from dtb
+                    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+                    //create authentication object
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
+
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    //add to SecurityContext
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }
             }
-
-            if(jwtTokenProvider.validateToken(token)) {
-                //get username from token
-                String username = jwtTokenProvider.getUsername(token);
-
-                //load the user from dtb
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-
-                //create authentication object
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
-
-                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                //add to SecurityContext
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            }
+        } catch (Exception e) {
+            logger.error("Could not set user authentication in security context", e);
         }
 
         //allow request continuously go to another filter
         filterChain.doFilter(request, response);
     }
 
-    private String getTokenFromRequest(HttpServletRequest request){
+    private String getTokenFromRequest(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
-        if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")){
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7, bearerToken.length());
         }
         return null;

@@ -7,29 +7,29 @@ Mục tiêu của dự án là cung cấp một hệ thống quản lý trực q
 
 ## 🚀 Tính năng
 
-| Vai trò           | Chức năng                                                                                                                                                                                                                       |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Khách hàng**    | - Xem thông tin chi tiết: About Us, Trò chơi, Phòng chơi<br>- Đặt phòng chơi game<br>- Theo dõi trạng thái đơn đặt phòng<br>- Gửi phản hồi cá nhân sau khi trải nghiệm                                                          |
-| **Quản trị viên** | - Quản lý người dùng (khách hàng, nhân viên)<br>- Quản lý trò chơi VR<br>- Quản lý phòng chơi<br>- Quản lý thiết bị chơi<br>- Quản lý đơn đặt phòng<br>- Quản lý phản hồi khách hàng<br>- Xác nhận thanh toán các đơn đặt phòng |
-| **Nhân viên**     | - Xác nhận thanh toán các đơn đặt phòng                                                                                                                                                                                         |
+| Vai trò           | Chức năng                                                                                                                                                                                                                                                                                           |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Khách hàng**    | - Xem thông tin chi tiết: About Us, Trò chơi, Phòng chơi<br>- Đặt phòng chơi game<br>- Theo dõi trạng thái đơn đặt phòng<br>- Gửi phản hồi cá nhân sau khi trải nghiệm<br>- Tương tác với trợ lý ảo AI                                                                                              |
+| **Quản trị viên** | - Quản lý người dùng (khách hàng, nhân viên)<br>- Quản lý trò chơi VR<br>- Quản lý phòng chơi<br>- Quản lý thiết bị chơi<br>- Quản lý đơn đặt phòng<br>- Quản lý phản hồi khách hàng<br>- Xác nhận thanh toán các đơn đặt phòng<br>- Quản lý cơ sở hạ tầng hệ thống<br>- Tương tác với trợ lý ảo AI |
+| **Nhân viên**     | - Xác nhận thanh toán các đơn đặt phòng<br>- Tương tác với trợ lý ảo AI                                                                                                                                                                                                                             |
 
 ## 🛠️ Tech Stack
 
-| **Component**        | **Technology**                        |
-| -------------------- | ------------------------------------- |
-| **Frontend**         | React.js, Vite, Tailwind CSS          |
-| **Backend**          | Java Spring Boot                      |
-| **Database**         | MySQL                                 |
-| **Authentication**   | Spring Security, JWT, Redis Blacklist |
-| **Containerization** | Docker                                |
-| **Deployment**       | Docker Compose                        |
-| **Version Control**  | Git, GitHub                           |
+| **Component**        | **Technology**                                       |
+| -------------------- | ---------------------------------------------------- |
+| **Frontend**         | React.js, Vite, Tailwind CSS                         |
+| **Backend**          | Java Spring Boot                                     |
+| **Database**         | MySQL                                                |
+| **Authentication**   | Spring Security, JWT, Redis Blacklist, Rate Limiting |
+| **Containerization** | Docker                                               |
+| **Deployment**       | Docker Compose                                       |
+| **Version Control**  | Git, GitHub                                          |
 
 ## 📁 Cấu trúc
 
 ```plaintext
 VR-game-zone-Management-System/
-├── backend/               # Java Spring Boot 
+├── backend/               # Java Spring Boot
 │   ├── src/               # Mã nguồn Java
 │   └── pom.xml            # Quản lý dependency & build
 ├── frontend/              # React + Vite
@@ -38,6 +38,7 @@ VR-game-zone-Management-System/
 ├── docker-compose.yml     # MySQL + Redis container
 └── README.md              # Tài liệu dự án
 ```
+
 ## ⚙️ Cài đặt
 
 ### I. Cài đặt backend và database (dev):
@@ -129,14 +130,19 @@ npm run dev
    - Trạng thái phòng và thiết bị được cập nhật realtime.
 
 6. **Feedback**
+
    - Khách hàng gửi phản hồi cá nhân sau khi chơi game tại Vrealm.
    - Admin có thể xem và quản lý tất cả feedback.
+
+7. **Tương tác với trợ lý ảo AI**
+   - Người dùng mở giao diện khung chat và nhập câu hỏi
+   - Trợ lý ảo Chatbot phản hồi câu trả lời thân thiện bằng tiếng Việt
 
 ## 🌍 Deployment Links
 
 - 🔗 Frontend (Client): https://vrealm-game-zone.vercel.app
 
-- 🔗 Backend (Server):https://vrealm-game-zone.onrender.com
+- 🔗 Backend (Server): https://vrealm-game-zone.onrender.com
 
 ## 📚 Tài liệu tham khảo
 
@@ -148,8 +154,11 @@ npm run dev
 - [MySQL Documentation](https://dev.mysql.com/doc/) – Quản lý cơ sở dữ liệu.
 - [Redis Documentation](https://redis.io/documentation) – Cấu hình cache / session.
 - [JSON Web Token (JWT)](https://jwt.io/introduction) – Xác thực và phân quyền người dùng.
+- [Spring AI](https://spring.io/projects/spring-ai) - Cấu hình tích hợp trợ lý ảo Chatbot
 
 ---
+
 Mọi đóng góp và thắc mắc xin liên hệ:
+
 - ☎ _: (+84) 904 262 833_
 - ✉ _: nam.nh225213@sis.hust.edu.vn_

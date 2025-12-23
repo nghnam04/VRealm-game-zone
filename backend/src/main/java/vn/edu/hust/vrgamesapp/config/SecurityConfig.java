@@ -37,9 +37,21 @@ public class SecurityConfig {
                     .csrf(csrf -> csrf.disable())
                     .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                     .authorizeHttpRequests(auth -> auth
-                            // Public
                             .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                            // Swagger UI
+                            .requestMatchers("/swagger-ui/**").permitAll()
+                            .requestMatchers("/v3/api-docs/**").permitAll()
+                            .requestMatchers("/swagger-resources/**").permitAll()
+                            .requestMatchers("/webjars/**").permitAll()
+
+                            // Auth
                             .requestMatchers("/api/auth/**").permitAll()
+
+                            // Chatbot
+                            .requestMatchers("/api/chatbot/**").permitAll()
+
+                            // Public GET
                             .requestMatchers(HttpMethod.GET,
                                     "/api/games/**",
                                     "/api/rooms/**",
@@ -48,8 +60,8 @@ public class SecurityConfig {
                             // Authenticate
                             .anyRequest().authenticated()
                     )
-                    .addFilterBefore(rateLimitFilter, UsernamePasswordAuthenticationFilter.class)
-                    .addFilterBefore(jwtApplicationFilter, UsernamePasswordAuthenticationFilter.class);
+                    .addFilterBefore(jwtApplicationFilter, UsernamePasswordAuthenticationFilter.class)
+                    .addFilterAfter(rateLimitFilter, JwtApplicationFilter.class);
 
             return http.build();
         } catch (Exception e) {

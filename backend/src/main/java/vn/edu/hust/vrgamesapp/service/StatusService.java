@@ -122,12 +122,14 @@ public class StatusService {
         long failCount = logs.stream().filter(l -> !l.getStatus().equals("OK") && !l.getStatus().equals("UP")).count();
 
         double uptimePercent = logs.size() == 0 ? 100 : (okCount * 100.0 / logs.size());
+        double downtimePercent = 100.0 - uptimePercent;
 
         return Map.of(
                 "totalLogs", logs.size(),
                 "ok", okCount,
                 "fail", failCount,
-                "uptime", uptimePercent
+                "uptime", uptimePercent,
+                "downtime", downtimePercent
         );
     }
 

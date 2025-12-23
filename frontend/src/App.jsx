@@ -34,6 +34,7 @@ import UserFeedbacks from "./pages/customer/UserFeedbacks";
 import UserFeedbackForm from "./pages/customer/UserFeedbackForm";
 import NotFound from "./pages/NotFound";
 import InfrastructureManagement from "./pages/admin/InfrastructureManagement";
+import ChatBotWidget from "./components/common/ChatBotWidget";
 
 const App = () => (
   <div className="min-h-screen bg-vr-bg font-body">
@@ -76,7 +77,10 @@ const App = () => (
           {/* Admin Routes */}
           <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
             <Route path="/dashboard" element={<DashBoard />}>
-              <Route path="infrastructure" element={<InfrastructureManagement />} />
+              <Route
+                path="infrastructure"
+                element={<InfrastructureManagement />}
+              />
               <Route path="users" element={<UserManagement />} />
               <Route path="games" element={<GameManagement />} />
               <Route path="rooms" element={<RoomManagement />} />
@@ -91,6 +95,7 @@ const App = () => (
         </Routes>
       </AnimatePresence>
     </main>
+    <ChatBotWidget />
     <Footer />
   </div>
 );

@@ -437,6 +437,45 @@ const Home = () => {
           />
         </div>
       </section>
+
+      {/* Statistical */}
+      <section>
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div className="card-base text-center">
+            <div className="text-4xl font-display font-bold text-blue-500 mb-2">
+              50+
+            </div>
+            <p className="text-gray-300">Tựa game VR đa dạng</p>
+          </div>
+
+          <div className="card-base text-center">
+            <div className="text-4xl font-display font-bold text-rose-700 mb-2">
+              30+
+            </div>
+            <p className="text-gray-300">Phòng chơi chuyên biệt</p>
+          </div>
+
+          <div className="card-base text-center">
+            <div className="text-4xl font-display font-bold text-teal-500 mb-2">
+              5.000+
+            </div>
+            <p className="text-gray-300">Lượt khách trải nghiệm</p>
+          </div>
+
+          <div className="card-base text-center">
+            <div className="text-4xl font-display font-bold text-yellow-500 mb-2">
+              4.9★
+            </div>
+            <p className="text-gray-300">Đánh giá trung bình</p>
+          </div>
+        </motion.div>
+      </section>
     </motion.div>
   );
 };

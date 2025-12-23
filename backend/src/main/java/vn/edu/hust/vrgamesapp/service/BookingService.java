@@ -374,6 +374,18 @@ public class BookingService {
         bookingRepository.delete(booking);
     }
 
+    public boolean hasActiveBooking(Long gameId, Long roomId) {
+        List<Booking> bookings = bookingRepository.findAll();
+
+        return bookings.stream()
+                .filter(b -> b.getStatus() != BookingStatus.CANCELLED)
+                .anyMatch(b ->
+                        (b.getRoom().getId().equals(roomId)
+                                || b.getGame().getId().equals(gameId))
+                );
+    }
+
+
     @Scheduled(fixedRate = 1800000, initialDelay = 1800000) // 30 mins
     public void checkPendingTimeouts() {
         LocalDateTime now = LocalDateTime.now();
