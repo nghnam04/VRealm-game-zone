@@ -95,7 +95,7 @@ public class ChatBotService {
                 - Mỗi ý PHẢI xuống dòng.
                 - KHÔNG gộp nhiều ý vào một đoạn.
                 - Danh sách PHẢI dùng dấu "- ".
-                - Giữa các phần PHẢI có dòng trống.
+                - Giữa các phần PHẢI có dòng trống <br/> ở cuối mỗi ý.
                 - Luôn kết thúc bằng một lời mời thân thiện.
                 
                 Thông tin định danh:
