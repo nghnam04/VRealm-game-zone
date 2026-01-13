@@ -38,7 +38,7 @@ public class AuthenticationService {
     private TokenBlacklistService tokenBlacklistService;
     private static final Logger logger = LoggerFactory.getLogger(AuthenticationService.class);
 
-    public JwtAuthResponse login(LoginDto loginDto){
+    public JwtAuthResponse login(LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsername(), loginDto.getPassword()
         ));
@@ -89,14 +89,18 @@ public class AuthenticationService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             logger.info("User logged out: {}", auth.getName());
-            SecurityContextHolder.clearContext();
 
             // get token from request & add to blacklist
             String token = request.getHeader("Authorization");
             if (token != null && token.startsWith("Bearer ")) {
                 token = token.substring(7);
                 tokenBlacklistService.blacklistToken(token);
+                logger.info("Token has been blacklisted for user: {}", auth.getName());
             }
+
+            SecurityContextHolder.clearContext();
+        } else {
+            logger.warn("Logout attempt without active authentication context");
         }
     }
 }

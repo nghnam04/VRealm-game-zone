@@ -23,9 +23,16 @@ const authService = {
     });
   },
 
-  logout: () => {
-    sessionStorage.removeItem("token");
-    sessionStorage.removeItem("user");
+  logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      console.log("Backend logout success - Token blacklisted");
+    } catch (error) {
+      console.error("Backend logout failed:", error);
+    } finally {
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
+    }
   },
 };
 
